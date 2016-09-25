@@ -26,6 +26,6 @@ sed -i '/org.binu.hypersonic/d' $outFilePath
 
 javac -d /tmp $outFilePath
 
-
+cat Player.java | xclip -selection c -in
 
 

@@ -29,4 +29,8 @@ public abstract class Entity {
             return -1;
         }
     }
+
+    public Coordinates getCurrentLocation() {
+        return currentLocation;
+    }
 }

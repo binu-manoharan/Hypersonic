@@ -27,6 +27,6 @@ public class MadBomber {
     }
 
     public BomberMove calculateNextMove() {
-        return new MoveXY(new Coordinates(0,0));
+        return new MoveXY(myBomber.getCurrentLocation());
     }
 }

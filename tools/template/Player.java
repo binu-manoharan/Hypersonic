@@ -7,6 +7,7 @@ import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.Entity;
 import org.binu.hypersonic.entity.EntityHelper;
+import org.binu.hypersonic.move.BomberMove;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -68,7 +69,8 @@ class Player {
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
 
-            System.out.println("BOMB 6 5");
+            final BomberMove move = madBomber.calculateNextMove();
+            System.out.println(move.render());
         }
     }
 }
