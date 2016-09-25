@@ -23,4 +23,13 @@ public class BoardHelper {
         }
         return row;
     }
+
+    public char[][] convertBoard(String[] boardString) {
+        final int numOfStrings = boardString.length;
+        char[][] board = new char[numOfStrings][];
+        for (int rowIndex = 0; rowIndex < numOfStrings; rowIndex++) {
+            board[rowIndex] = convertRow(boardString[rowIndex]);
+        }
+        return board;
+    }
 }
