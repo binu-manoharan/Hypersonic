@@ -4,11 +4,15 @@ package org.binu.hypersonic;
  * Helper class to process row data in string to int array
  */
 public class BoardHelper {
-    public char[] convertRow(String rowString) {
-        final int rowLength = rowString.length();
-        char[] row = new char[rowLength];
 
-        for (int index = 0; index < rowLength; index++) {
+    private static final int BOARD_WIDTH = 13;
+    private static final int BOARD_HEIGHT = 11;
+
+    public char[] convertRow(String rowString) {
+        char[] row = new char[BOARD_WIDTH];
+        assert BOARD_WIDTH == rowString.length();
+
+        for (int index = 0; index < BOARD_WIDTH; index++) {
             final char charAtIndex = rowString.charAt(index);
             switch (charAtIndex) {
                 case '.':
@@ -25,9 +29,11 @@ public class BoardHelper {
     }
 
     public char[][] convertBoard(String[] boardString) {
-        final int numOfStrings = boardString.length;
-        char[][] board = new char[numOfStrings][];
-        for (int rowIndex = 0; rowIndex < numOfStrings; rowIndex++) {
+        char[][] board = new char[BOARD_HEIGHT][];
+
+        assert BOARD_HEIGHT == boardString.length;
+
+        for (int rowIndex = 0; rowIndex < BOARD_HEIGHT; rowIndex++) {
             board[rowIndex] = convertRow(boardString[rowIndex]);
         }
         return board;

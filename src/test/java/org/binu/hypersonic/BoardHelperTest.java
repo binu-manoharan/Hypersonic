@@ -57,12 +57,14 @@ public class BoardHelperTest {
         final String[] boardString = getEmptyBoardString();
 
         char[][] board = boardHelper.convertBoard(boardString);
+        assertThat("Board is 11 high", board.length, is(11));
+
         for (int row = 0; row < board.length; row++) {
+            assertThat("Board row is 13 wide", board[row].length, is(13));
             for (int col = 0; col < board[row].length; col++) {
                 assertThat("Board is empty", board[row][col], is('.'));
             }
         }
-
     }
 
     @Test
