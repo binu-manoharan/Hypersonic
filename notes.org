@@ -1,18 +1,19 @@
 * TODO Beat wood 3 boss
-** Tasks [0/2]
-*** TODO Starting greenfield checkpoint
+** Tasks [1/3]
+*** DONE Starting greenfield checkpoint
 **** Get previous merge logic in
 **** Clean up template
-*** TODO Minimal classes [0/9]
+*** TODO Minimal classes [1/10]
 **** TODO Player
 **** TODO Bomber
 **** TODO Bomb
-**** TODO calculateNextMove class - MoveMaker?
+**** TODO calculateNextMove class - MadBomber?
 **** TODO Node
 **** TODO Coordinates
 **** TODO isHotSpotDirectlyReachable? - PathToXY?
 **** TODO getListOfHotSpots - No fancy grouping needed - HotSpotProvider
 **** TODO ScoreManager
+*** TODO Create test helpers
 ** Make a simple implementation 
 *** Classes
 **** BoardState
