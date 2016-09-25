@@ -1,0 +1,47 @@
+* TODO Beat wood 3 boss
+** Tasks [0/2]
+*** TODO Starting greenfield checkpoint
+**** Get previous merge logic in
+**** Clean up template
+*** TODO Minimal classes [0/9]
+**** TODO Player
+**** TODO Bomber
+**** TODO Bomb
+**** TODO calculateNextMove class - MoveMaker?
+**** TODO Node
+**** TODO Coordinates
+**** TODO isHotSpotDirectlyReachable? - PathToXY?
+**** TODO getListOfHotSpots - No fancy grouping needed - HotSpotProvider
+**** TODO ScoreManager
+** Make a simple implementation 
+*** Classes
+**** BoardState
+***** Bomb impacted cells
+***** getAvailableMovesForPlayer?
+**** Bomb
+***** effective tick
+***** is range determined by player of specific bomb
+***** what kind of power ups exist that change bomb behaviour?
+**** Bomber
+***** prefered hotspots
+**** Coordinates
+**** PathToXY/SafePathToXY
+**** Survive opponent bomber
+**** HotspotProvider/HotspotGrouping?
+**** Some call for calculate next move 
+***** keep the score calculator logic in the same parse as creation
+**** Node
+***** node score
+***** parent total score
+***** current level/depth
+***** getScore = node + parent scores
+**** ScoreManager
+***** depth vs score
+**** Something to do with Bomb's time element
+* Thoughts
+** Hotspot grouping
+** Chain ticks and kill logic - effective tick for bombs
+** Need to work with powerups
+** Entity class?
+** Board state with an additional 13x11 element?!?!
+** Calculate opponent score
