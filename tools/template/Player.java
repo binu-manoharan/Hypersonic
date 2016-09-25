@@ -1,7 +1,8 @@
 package template;
 
 import org.binu.hypersonic.BoardHelper;
-import org.binu.hypersonic.Coordinate;
+import org.binu.hypersonic.Coordinates;
+import org.binu.hypersonic.MadBomber;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.Entity;
@@ -43,7 +44,7 @@ class Player {
                 int param1 = in.nextInt();
                 int param2 = in.nextInt();
 
-                final Entity entity = entityHelper.createEntity(entityType, owner, new Coordinate(x, y), param1, param2);
+                final Entity entity = entityHelper.createEntity(entityType, owner, new Coordinates(x, y), param1, param2);
                 if (entity.getEntityType() == 0) {
                     bombers.add((Bomber) entity);
                 } else if (entity.getEntityType() == 1) {
@@ -56,7 +57,7 @@ class Player {
 
             //data conversions
             final char[][] board = boardHelper.convertBoard(boardString);
-
+            MadBomber madBomber = new MadBomber(myId, board, bombers, bombs);
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
 

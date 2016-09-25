@@ -1,6 +1,6 @@
 package org.binu.hypersonic.entity;
 
-import org.binu.hypersonic.Coordinate;
+import org.binu.hypersonic.Coordinates;
 
 /**
  * Helper for creating entities - bomber or bomb type
@@ -22,12 +22,12 @@ import org.binu.hypersonic.Coordinate;
  *  </ul>
  */
 public class EntityHelper {
-    public Entity createEntity(int entityType, int owner, Coordinate coordinate, int param1, int param2) {
+    public Entity createEntity(int entityType, int owner, Coordinates coordinates, int param1, int param2) {
         switch (entityType) {
             case 0:
-                return new Bomber(owner, coordinate, param1, param2);
+                return new Bomber(owner, coordinates, param1, param2);
             case 1:
-                return new Bomb(owner, coordinate, param1, param2);
+                return new Bomb(owner, coordinates, param1, param2);
             default:
                 assert false : "Invalid entity: we don't harbour ghosts. Go away!";
                 return null;
