@@ -22,6 +22,8 @@ do
     cat $i | grep -v import | grep -v package | sed -e 's/public class/class/g' -e 's/public enum/enum/g' -e 's/public interface/interface/g' -e 's/public abstract/abstract/g' -e 's/@Nullable//g' -e 's/@Deprecated//g' -e 's/@NotNull//g'>> $outFilePath
 done
 
+sed -i '/org.binu.hypersonic/d' $outFilePath
+
 javac -d /tmp $outFilePath
 
 

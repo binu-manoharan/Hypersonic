@@ -1,5 +1,6 @@
 package template;
 
+import org.binu.hypersonic.BoardHelper;
 import java.util.Scanner;
 
 /**
@@ -14,12 +15,15 @@ class Player {
         int height = in.nextInt();
         int myId = in.nextInt();
         in.nextLine();
+
+        BoardHelper boardHelper = new BoardHelper();
         // game loop
         while (true) {
+            String[] boardString = new String[height];
             for (int i = 0; i < height; i++) {
-                String row = in.nextLine();
-                System.err.println(row);
+                boardString[i] = in.nextLine();
             }
+
             int entities = in.nextInt();
             for (int i = 0; i < entities; i++) {
                 int entityType = in.nextInt();
@@ -30,6 +34,9 @@ class Player {
                 int param2 = in.nextInt();
             }
             in.nextLine();
+
+            //data conversions
+            final char[][] board = boardHelper.convertBoard(boardString);
 
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
