@@ -1,2 +1,4 @@
 .idea/*
 .gradle/*
+*.class
+tools/Player.java
