@@ -1,6 +1,11 @@
 package template;
 
 import org.binu.hypersonic.BoardHelper;
+import org.binu.hypersonic.Coordinate;
+import org.binu.hypersonic.entity.Entity;
+import org.binu.hypersonic.entity.EntityHelper;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,6 +22,7 @@ class Player {
         in.nextLine();
 
         BoardHelper boardHelper = new BoardHelper();
+        EntityHelper entityHelper = new EntityHelper();
         // game loop
         while (true) {
             String[] boardString = new String[height];
@@ -25,6 +31,7 @@ class Player {
             }
 
             int entities = in.nextInt();
+            final ArrayList<Entity> entitiesList = new ArrayList<>();
             for (int i = 0; i < entities; i++) {
                 int entityType = in.nextInt();
                 int owner = in.nextInt();
@@ -32,6 +39,9 @@ class Player {
                 int y = in.nextInt();
                 int param1 = in.nextInt();
                 int param2 = in.nextInt();
+
+                final Entity entity = entityHelper.createEntity(entityType, owner, new Coordinate(x, y), param1, param2);
+                entitiesList.add(entity);
             }
             in.nextLine();
 
