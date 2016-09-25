@@ -6,6 +6,7 @@ import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,8 +33,10 @@ public class MadBomber {
         hotSpotProvider = new HotSpotProvider(board);
         final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(myBomber.getRange());
         if (allHotSpots.size() > 0) {
+            Collections.sort(allHotSpots);
             final Coordinates firstCoordinate = allHotSpots.get(0).getCoordinates();
             final Coordinates myCurrentLocation = myBomber.getCurrentLocation();
+            System.err.println(allHotSpots.get(0).getNumBoxes());
             if (myCurrentLocation.equals(firstCoordinate)) {
                 return new BombXY(firstCoordinate);
             }
