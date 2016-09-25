@@ -3,15 +3,15 @@
 *** DONE Starting greenfield checkpoint
 **** Get previous merge logic in
 **** Clean up template
-*** TODO Minimal classes [1/10]
-**** TODO Player
-**** TODO Bomber
-**** TODO Bomb
-**** TODO calculateNextMove class - MadBomber?
+*** TODO Minimal classes [6/9]
+**** DONE Player
+**** DONE Bomber
+**** DONE Bomb
+**** DONE calculateNextMove class - MadBomber?
 **** TODO Node
-**** TODO Coordinates
+**** DONE Coordinates
 **** TODO isHotSpotDirectlyReachable? - PathToXY?
-**** TODO getListOfHotSpots - No fancy grouping needed - HotSpotProvider
+**** DONE getListOfHotSpots - No fancy grouping needed - HotSpotProvider
 **** TODO ScoreManager
 *** TODO Create test helpers
 ** Make a simple implementation 
