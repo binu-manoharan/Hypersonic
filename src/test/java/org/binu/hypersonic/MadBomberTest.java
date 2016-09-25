@@ -26,13 +26,14 @@ public class MadBomberTest {
     public void setUp() throws Exception {
         emptyBoard = TestHelper.getEmptyBoard();
         entityHelper = new EntityHelper();
-        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(0, 0), 1, 3);
+        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(10, 10), 1, 3);
     }
 
     @Test
-    public void should_calculate_next_move() throws Exception {
-        MadBomber madBomber = new MadBomber(0, emptyBoard, singletonList(bomber), EMPTY_LIST);
+    public void there_should_be_nothing_for_the_bomber_to_do_in_a_totally_empty_board() throws Exception {
+        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
+        assertThat("Bomber move is not null", bomberMove.render(), is("MOVE 10 10"));
     }
 }

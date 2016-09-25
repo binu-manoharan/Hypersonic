@@ -8,6 +8,7 @@ import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.Entity;
 import org.binu.hypersonic.entity.EntityHelper;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -36,6 +37,7 @@ class Player {
             int entities = in.nextInt();
             final ArrayList<Bomber> bombers = new ArrayList<>();
             final ArrayList<Bomb> bombs = new ArrayList<>();
+            Bomber myBomber = null;
             for (int i = 0; i < entities; i++) {
                 int entityType = in.nextInt();
                 int owner = in.nextInt();
@@ -46,6 +48,10 @@ class Player {
 
                 final Entity entity = entityHelper.createEntity(entityType, owner, new Coordinates(x, y), param1, param2);
                 if (entity.getEntityType() == 0) {
+                    //My bomber has the same id as myId
+                    if (owner == myId) {
+                        myBomber = (Bomber) entity;
+                    }
                     bombers.add((Bomber) entity);
                 } else if (entity.getEntityType() == 1) {
                     bombs.add((Bomb) entity);
@@ -54,10 +60,11 @@ class Player {
                 }
             }
             in.nextLine();
+            assert myBomber != null;
 
             //data conversions
             final char[][] board = boardHelper.convertBoard(boardString);
-            MadBomber madBomber = new MadBomber(myId, board, bombers, bombs);
+            MadBomber madBomber = new MadBomber(myBomber, board, bombers, bombs);
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
 

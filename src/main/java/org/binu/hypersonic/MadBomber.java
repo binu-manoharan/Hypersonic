@@ -3,6 +3,7 @@ package org.binu.hypersonic;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.move.BomberMove;
+import org.binu.hypersonic.move.MoveXY;
 
 import java.util.List;
 
@@ -13,19 +14,19 @@ import java.util.List;
  */
 public class MadBomber {
 
-    private final int myId;
+    private final Bomber myBomber;
     private final char[][] board;
     private final List<Bomber> bombers;
     private final List<Bomb> bombs;
 
-    public MadBomber(int myId, char[][] board, List<Bomber> bombers, List<Bomb> bombs) {
-        this.myId = myId;
+    public MadBomber(Bomber myBomber, char[][] board, List<Bomber> bombers, List<Bomb> bombs) {
+        this.myBomber = myBomber;
         this.board = board;
         this.bombers = bombers;
         this.bombs = bombs;
     }
 
     public BomberMove calculateNextMove() {
-        return null;
+        return new MoveXY(new Coordinates(0,0));
     }
 }
