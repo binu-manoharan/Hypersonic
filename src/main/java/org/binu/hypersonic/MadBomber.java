@@ -2,6 +2,7 @@ package org.binu.hypersonic;
 
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
+import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
 
@@ -18,6 +19,7 @@ public class MadBomber {
     private final char[][] board;
     private final List<Bomber> bombers;
     private final List<Bomb> bombs;
+    private HotSpotProvider hotSpotProvider;
 
     public MadBomber(Bomber myBomber, char[][] board, List<Bomber> bombers, List<Bomb> bombs) {
         this.myBomber = myBomber;
@@ -27,6 +29,16 @@ public class MadBomber {
     }
 
     public BomberMove calculateNextMove() {
+        hotSpotProvider = new HotSpotProvider(board);
+        final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(myBomber.getRange());
+        if (allHotSpots.size() > 0) {
+            final Coordinates firstCoordinate = allHotSpots.get(0).getCoordinates();
+            final Coordinates myCurrentLocation = myBomber.getCurrentLocation();
+            if (myCurrentLocation.equals(firstCoordinate)) {
+                return new BombXY(firstCoordinate);
+            }
+            return new MoveXY(firstCoordinate);
+        }
         return new MoveXY(myBomber.getCurrentLocation());
     }
 }

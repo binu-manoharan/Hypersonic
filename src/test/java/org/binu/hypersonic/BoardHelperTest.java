@@ -57,10 +57,10 @@ public class BoardHelperTest {
         final String[] boardString = getEmptyBoardString();
 
         char[][] board = boardHelper.convertBoard(boardString);
-        assertThat("Board is 11 high", board.length, is(11));
+        assertThat("Board is 13 high", board.length, is(13));
 
         for (int row = 0; row < board.length; row++) {
-            assertThat("Board row is 13 wide", board[row].length, is(13));
+            assertThat("Board row is 11 wide", board[row].length, is(11));
             for (int col = 0; col < board[row].length; col++) {
                 assertThat("Board is empty", board[row][col], is('.'));
             }
@@ -68,12 +68,12 @@ public class BoardHelperTest {
     }
 
     @Test
-    public void should_get_a_box_at_0_12() throws Exception {
+    public void should_get_a_box_at_12_0() throws Exception {
         final String[] boardString = getEmptyBoardString();
         boardString[0] = "............0";
         char[][] board = boardHelper.convertBoard(boardString);
 
-        assertThat("There is a box at [0,12] ", board[0][12], is('0'));
+        assertThat("There is a box at [12,0] ", board[12][0], is('0'));
     }
 
     @Test(expected = AssertionError.class)

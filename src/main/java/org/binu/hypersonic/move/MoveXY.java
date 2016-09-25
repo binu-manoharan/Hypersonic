@@ -5,7 +5,7 @@ import org.binu.hypersonic.Coordinates;
 /**
  * Move to coordinates command for bomber
  */
-public class MoveXY implements BomberMove{
+public class MoveXY implements BomberMove {
     private final Coordinates coordinates;
 
     public MoveXY(Coordinates coordinates) {
@@ -14,6 +14,6 @@ public class MoveXY implements BomberMove{
 
     @Override
     public String render() {
-        return "MOVE " + coordinates.x+ " " + coordinates.y;
+        return "MOVE " + coordinates.x + " " + coordinates.y;
     }
 }

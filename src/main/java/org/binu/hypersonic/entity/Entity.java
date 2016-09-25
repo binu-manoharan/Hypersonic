@@ -33,4 +33,8 @@ public abstract class Entity {
     public Coordinates getCurrentLocation() {
         return currentLocation;
     }
+
+    public int getRange() {
+        return param2;
+    }
 }
