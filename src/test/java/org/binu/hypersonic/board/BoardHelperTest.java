@@ -1,5 +1,6 @@
-package org.binu.hypersonic;
+package org.binu.hypersonic.board;
 
+import org.binu.hypersonic.board.BoardHelper;
 import org.junit.Before;
 import org.junit.Test;
 

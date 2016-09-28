@@ -1,5 +1,7 @@
 package org.binu.hypersonic;
 
+import org.binu.hypersonic.board.BoardHelper;
+
 /**
  * Helper method for test classes.
  */

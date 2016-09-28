@@ -1,6 +1,6 @@
 package template;
 
-import org.binu.hypersonic.BoardHelper;
+import org.binu.hypersonic.board.BoardHelper;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.MadBomber;
 import org.binu.hypersonic.entity.Bomb;
@@ -9,10 +9,8 @@ import org.binu.hypersonic.entity.Entity;
 import org.binu.hypersonic.entity.EntityHelper;
 import org.binu.hypersonic.move.BomberMove;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Collections;
 
 /**
  * Auto-generated code below aims at helping you parse

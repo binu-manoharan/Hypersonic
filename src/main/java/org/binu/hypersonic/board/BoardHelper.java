@@ -1,4 +1,4 @@
-package org.binu.hypersonic;
+package org.binu.hypersonic.board;
 
 /**
  * Helper class to process row data in string to int array
