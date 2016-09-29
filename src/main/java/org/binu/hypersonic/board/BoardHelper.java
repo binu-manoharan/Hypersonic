@@ -6,6 +6,7 @@ package org.binu.hypersonic.board;
 public class BoardHelper {
 
     public static final char EMPTY_FLOOR = '.';
+    public static final char WALL = 'X';
     public static final char BOX = '0';
     public static final char BOX_WITH_EXTRA_RANGE = '1';
     public static final char BOX_WITH_EXTRA_BOMB = '2';
@@ -22,6 +23,9 @@ public class BoardHelper {
                     break;
                 case BOX:
                     row[index] = new Cell(CellStatus.BOX);
+                    break;
+                case WALL:
+                    row[index] = new Cell(CellStatus.WALL);
                     break;
                 case BOX_WITH_EXTRA_RANGE:
                     row[index] = new Cell(CellStatus.BOX, CellItem.BONUS_RANGE);

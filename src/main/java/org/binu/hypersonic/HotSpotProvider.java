@@ -23,7 +23,7 @@ public class HotSpotProvider {
         final Cell[][] cells = board.getCells();
         for (int y = 0; y < Board.BOARD_HEIGHT; y++) {
             for (int x = 0; x < Board.BOARD_WIDTH; x++) {
-                final int numberOfBoxesHit = numberOfBoxesHit(y, x, y, x, range);
+                final int numberOfBoxesHit = numberOfBoxesHit(x, y, x, y, range);
                 cells[y][x].setNumberOfBoxesHit(numberOfBoxesHit);
                 if (numberOfBoxesHit > 0) {
                     allHotSpots.add(new HotSpot(x, y, numberOfBoxesHit));
@@ -34,10 +34,15 @@ public class HotSpotProvider {
         return allHotSpots;
     }
 
-    public int numberOfBoxesHit(int initialY, int initialX, int y, int x, int range) {
+    public int numberOfBoxesHit(int initialX, int initialY, int x, int y, int range) {
         int boxesHit = 0;
 
         if (y < 0 || y >= Board.BOARD_HEIGHT || x < 0 || x >= Board.BOARD_WIDTH) {
+            return 0;
+        }
+
+        //TODO wall tests
+        if (board.getCell(x, y).getCellStatus() == CellStatus.WALL) {
             return 0;
         }
 
@@ -53,16 +58,16 @@ public class HotSpotProvider {
 
         if (initialX == x) {
             if (y <= initialY)
-                boxesHit += numberOfBoxesHit(initialY, initialX, y - 1, x, range);
+                boxesHit += numberOfBoxesHit(initialX, initialY, x, y - 1, range);
             if (y >= initialY)
-                boxesHit += numberOfBoxesHit(initialY, initialX, y + 1, x, range);
+                boxesHit += numberOfBoxesHit(initialX, initialY, x, y + 1, range);
         }
 
         if (initialY == y) {
             if (x <= initialX)
-                boxesHit += numberOfBoxesHit(initialY, initialX, y, x - 1, range);
+                boxesHit += numberOfBoxesHit(initialX, initialY, x - 1, y, range);
             if (x >= initialX)
-                boxesHit += numberOfBoxesHit(initialY, initialX, y, x + 1, range);
+                boxesHit += numberOfBoxesHit(initialX, initialY, x + 1, y, range);
         }
         return boxesHit;
     }
