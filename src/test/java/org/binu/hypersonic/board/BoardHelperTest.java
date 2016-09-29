@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.binu.hypersonic.TestHelper.*;
 import static org.binu.hypersonic.TestHelper.getEmptyRowString;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.*;
 
 /**
@@ -48,9 +49,31 @@ public class BoardHelperTest {
         }
     }
 
+    @Test
+    public void should_convert_a_string_to_all_cell_status_and_items() throws Exception {
+        row = boardHelper.convertRow(".012.012.012.");
+        assertThat("Row has 13 elements.", row.length, is(13));
+        for (int i = 0; i < row.length; i++) {
+            Cell element = row[i];
+            if (i % 4 == 0) {
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.EMPTY));
+                assertThat("Element is .", element.getCellItem(), is(nullValue()));
+            } else if ( i % 4 == 1) {
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.BOX));
+                assertThat("Element is .", element.getCellItem(), is(nullValue()));
+            } else if ( i % 4 == 2) {
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.BOX));
+                assertThat("Element is .", element.getCellItem(), is(CellItem.BONUS_RANGE));
+            } else if ( i % 4 == 3) {
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.BOX));
+                assertThat("Element is .", element.getCellItem(), is(CellItem.BONUS_BOMBS));
+            }
+        }
+    }
+
     @Test(expected = AssertionError.class)
     public void should_throw_error_when_passed_incorrect_string() throws Exception {
-        row = boardHelper.convertRow(".1.0.0.0.0.0.");
+        row = boardHelper.convertRow(".3.0.0.0.0.0.");
     }
 
     @Test
@@ -94,7 +117,7 @@ public class BoardHelperTest {
     @Test(expected = AssertionError.class)
     public void should_throw_error_when_passed_incorrect_board_string() throws Exception {
         final String[] boardString = getEmptyBoardString();
-        boardString[0] = "............1";
+        boardString[0] = "............3";
         boardHelper.convertBoard(boardString);
     }
 }

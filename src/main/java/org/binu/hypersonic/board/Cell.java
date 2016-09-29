@@ -4,12 +4,19 @@ package org.binu.hypersonic.board;
  * Each cell on the board
  */
 public class Cell {
-    CellStatus cellStatus;
+    private CellItem cellItem;
+    private CellStatus cellStatus;
     private int numberOfBoxesHit;
 
     public Cell(CellStatus cellStatus) {
         this.cellStatus = cellStatus;
     }
+
+    public Cell(CellStatus cellStatus, CellItem cellItem) {
+        this.cellStatus = cellStatus;
+        this.cellItem = cellItem;
+    }
+
 
     public CellStatus getCellStatus() {
         return cellStatus;
@@ -31,5 +38,10 @@ public class Cell {
 
     public void setCellStatus(CellStatus cellStatus) {
         this.cellStatus = cellStatus;
+    }
+
+
+    public CellItem getCellItem() {
+        return cellItem;
     }
 }

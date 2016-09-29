@@ -7,6 +7,8 @@ public class BoardHelper {
 
     public static final char EMPTY_FLOOR = '.';
     public static final char BOX = '0';
+    public static final char BOX_WITH_EXTRA_RANGE = '1';
+    public static final char BOX_WITH_EXTRA_BOMB = '2';
 
     public Cell[] convertRow(String rowString) {
         Cell[] row = new Cell[Board.BOARD_WIDTH];
@@ -21,7 +23,14 @@ public class BoardHelper {
                 case BOX:
                     row[index] = new Cell(CellStatus.BOX);
                     break;
+                case BOX_WITH_EXTRA_RANGE:
+                    row[index] = new Cell(CellStatus.BOX, CellItem.BONUS_RANGE);
+                    break;
+                case BOX_WITH_EXTRA_BOMB:
+                    row[index] = new Cell(CellStatus.BOX, CellItem.BONUS_BOMBS);
+                    break;
                 default:
+                    System.err.println("Unhandled char: " + charAtIndex);
                     assert false : "unhandled char in row string";
             }
         }
