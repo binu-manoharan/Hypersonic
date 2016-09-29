@@ -15,7 +15,7 @@ public class Item extends Entity {
     public CellItem getItemType() {
         if (param1 == 1)
             return CellItem.BONUS_RANGE;
-        if (param2 == 2)
+        if (param1 == 2)
             return CellItem.BONUS_BOMBS;
         assert false : "They said there would be items!";
         return null;
