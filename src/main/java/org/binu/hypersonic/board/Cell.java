@@ -26,12 +26,13 @@ public class Cell {
         if (cellStatus == CellStatus.EMPTY)
             return ".";
         else if (cellStatus == CellStatus.BOX)
-            return "B";
+            return "O";
         else if (cellStatus == CellStatus.WALL)
+            return "W";
+        else if (cellStatus == CellStatus.BOMB)
             return "X";
         else
             return "*";
-
     }
 
     public void setNumberOfBoxesHit(int numberOfBoxesHit) {

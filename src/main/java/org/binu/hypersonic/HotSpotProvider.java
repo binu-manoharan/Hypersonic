@@ -42,7 +42,6 @@ public class HotSpotProvider {
             return 0;
         }
 
-        //TODO wall tests
         final Cell currentCell = board.getCell(x, y);
         final CellStatus cellStatus = currentCell.getCellStatus();
         final CellItem cellItem = currentCell.getCellItem();
@@ -51,7 +50,8 @@ public class HotSpotProvider {
             return 0;
         }
 
-        if (cellStatus == CellStatus.WALL || (cellStatus == CellStatus.BOX && y == initialY && x == initialX)) {
+        if (cellStatus == CellStatus.WALL || cellStatus == CellStatus.BOMB
+                || (cellStatus == CellStatus.BOX && y == initialY && x == initialX)) {
             return 0;
         }
 

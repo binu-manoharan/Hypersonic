@@ -6,5 +6,6 @@ package org.binu.hypersonic.board;
 public enum CellStatus {
     EMPTY,
     BOX,
-    WALL
+    WALL,
+    BOMB
 }

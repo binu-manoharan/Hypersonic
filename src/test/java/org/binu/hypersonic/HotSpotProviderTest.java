@@ -4,9 +4,12 @@ import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.Cell;
 import org.binu.hypersonic.board.CellItem;
 import org.binu.hypersonic.board.CellStatus;
+import org.binu.hypersonic.entity.Bomb;
+import org.binu.hypersonic.entity.EntityHelper;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.binu.hypersonic.TestHelper.getEmptyBoard;
@@ -141,29 +144,39 @@ public class HotSpotProviderTest {
 
     @Test
     public void should_not_have_a_hotspot_at_0_0_as_item_obstructs() throws Exception {
-        board.setCellStatus(2, 0, CellStatus.BOX);
-        final Cell cell = board.getCell(1, 0);
+        final Cell cell = board.getCell(2, 0);
         cell.setCellItem(CellItem.BONUS_RANGE);
         hotSpotProvider = new HotSpotProvider(board);
-        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(1, 0, 1, 0, 3);
         assertThat("Should hit no boxes", boxesHit, is(0));
+        final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(3);
+        assertThat("There should only be 5 hotspots", allHotSpots.size(), is(5));
     }
 
     @Test
     public void should_not_have_a_hotspot_at_0_0_as_bomb_obstructs() throws Exception {
-        board.setCellStatus(2, 0, CellStatus.BOX);
-//      TODO  set bomb at 1,0
+        final EntityHelper entityHelper = new EntityHelper();
+        final ArrayList<Bomb> bombs = new ArrayList<>();
+        final Bomb bomb = (Bomb) entityHelper.createEntity(1, 2, new Coordinates(2, 0), 7, 3);
+        bombs.add(bomb);
+        board.addBombs(bombs);
+
+        board.setCellStatus(3, 0, CellStatus.BOX);
+        board.printBoard();
         hotSpotProvider = new HotSpotProvider(board);
-        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(1, 0, 1, 0, 3);
         assertThat("Should hit no boxes", boxesHit, is(0));
+        final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(3);
+        assertThat("There should only be 4 hotspots", allHotSpots.size(), is(4));
     }
 
     @Test
     public void should_not_have_a_hotspot_at_0_0_as_wall_obstructs() throws Exception {
-        board.setCellStatus(2, 0, CellStatus.BOX);
-        board.setCellStatus(1, 0, CellStatus.WALL);
+        board.setCellStatus(2, 0, CellStatus.WALL);
         hotSpotProvider = new HotSpotProvider(board);
-        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(1, 0, 1, 0, 3);
         assertThat("Should hit no boxes", boxesHit, is(0));
+        final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(3);
+        assertThat("There should only be 4 hotspots", allHotSpots.size(), is(4));
     }
 }

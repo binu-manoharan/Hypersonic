@@ -1,6 +1,9 @@
 package org.binu.hypersonic.board;
 
 import org.binu.hypersonic.Coordinates;
+import org.binu.hypersonic.entity.Bomb;
+
+import java.util.ArrayList;
 
 /**
  * Board containing the game grid and all cells
@@ -46,5 +49,12 @@ public class Board {
 
     public CellStatus getCellStatus(Coordinates coordinates) {
         return cells[coordinates.y][coordinates.x].getCellStatus();
+    }
+
+    public void addBombs(ArrayList<Bomb> bombs) {
+        for (Bomb bomb : bombs) {
+            final Coordinates currentLocation = bomb.getCurrentLocation();
+            cells[currentLocation.y][currentLocation.x].setCellStatus(CellStatus.BOMB);
+        }
     }
 }

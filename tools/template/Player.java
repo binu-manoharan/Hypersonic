@@ -67,6 +67,7 @@ class Player {
 
             //data conversions
             final Board board = boardHelper.convertBoard(boardString);
+            board.addBombs(bombs);
             MadBomber madBomber = new MadBomber(myBomber, board, bombers, bombs, items);
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
