@@ -37,4 +37,12 @@ public class Board {
     public Cell[][] getCells() {
         return cells;
     }
+
+    public Cell getCell(int x, int y) {
+        return cells[y][x];
+    }
+
+    public void setCellStatus(int x, int y, CellStatus cellStatus) {
+        cells[y][x].setCellStatus(cellStatus);
+    }
 }

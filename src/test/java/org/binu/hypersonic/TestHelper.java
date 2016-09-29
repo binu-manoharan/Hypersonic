@@ -1,5 +1,6 @@
 package org.binu.hypersonic;
 
+import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.BoardHelper;
 
 /**
@@ -29,7 +30,7 @@ public class TestHelper {
         return board;
     }
 
-    public static char[][] getEmptyBoard() {
+    public static Board getEmptyBoard() {
         return boardHelper.convertBoard(getEmptyBoardString());
     }
 }

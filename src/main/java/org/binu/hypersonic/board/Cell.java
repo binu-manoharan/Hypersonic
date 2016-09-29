@@ -5,6 +5,7 @@ package org.binu.hypersonic.board;
  */
 public class Cell {
     CellStatus cellStatus;
+    private int numberOfBoxesHit;
 
     public Cell(CellStatus cellStatus) {
         this.cellStatus = cellStatus;
@@ -22,5 +23,13 @@ public class Cell {
         else
             return "*";
 
+    }
+
+    public void setNumberOfBoxesHit(int numberOfBoxesHit) {
+        this.numberOfBoxesHit = numberOfBoxesHit;
+    }
+
+    public void setCellStatus(CellStatus cellStatus) {
+        this.cellStatus = cellStatus;
     }
 }

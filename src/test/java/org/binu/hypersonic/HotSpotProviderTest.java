@@ -1,5 +1,7 @@
 package org.binu.hypersonic;
 
+import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.board.CellStatus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,13 +15,14 @@ import static org.junit.Assert.assertThat;
  * Test for {@link HotSpotProvider}
  */
 public class HotSpotProviderTest {
-    private char[][] board;
+    private Board board;
     private HotSpotProvider hotSpotProvider;
 
     @Before
     public void setUp() throws Exception {
         board = getEmptyBoard();
-        board[3][0] = '0';
+
+        board.setCellStatus(3, 0, CellStatus.BOX);
         hotSpotProvider = new HotSpotProvider(board);
     }
 
@@ -115,8 +118,8 @@ public class HotSpotProviderTest {
 
     @Test
     public void should_find_14_hotspots_and_0_0_is_not_one_of_them() throws Exception {
-        board[0][3] = '0';
-        board[1][1] = '0';
+        board.setCellStatus(0, 3, CellStatus.BOX);
+        board.setCellStatus(1, 1, CellStatus.BOX);
         hotSpotProvider = new HotSpotProvider(board);
         final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(3);
         assertThat("There should be 14 hotspots", allHotSpots.size(), is(14));
@@ -126,11 +129,11 @@ public class HotSpotProviderTest {
 
     @Test
     public void should_hit_four_boxes() throws Exception {
-        board[4][1] = '0';
-        board[2][1] = '0';
-        board[3][2] = '0';
+        board.setCellStatus(4, 1, CellStatus.BOX);
+        board.setCellStatus(2, 1, CellStatus.BOX);
+        board.setCellStatus(3, 2, CellStatus.BOX);
         hotSpotProvider = new HotSpotProvider(board);
-        final int boxesHit = hotSpotProvider.numberOfBoxesHit(3,1, 3, 1, 3);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(3, 1, 3, 1, 3);
         assertThat("Should hit 4 boxes", boxesHit, is(4));
     }
 }
