@@ -2,6 +2,7 @@ package org.binu.hypersonic.board;
 
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.entity.Bomb;
+import org.binu.hypersonic.entity.Item;
 
 import java.util.ArrayList;
 
@@ -55,6 +56,17 @@ public class Board {
         for (Bomb bomb : bombs) {
             final Coordinates currentLocation = bomb.getCurrentLocation();
             cells[currentLocation.y][currentLocation.x].setCellStatus(CellStatus.BOMB);
+        }
+    }
+
+    /**
+     * This is for the items outside the box
+     * @param items list of items dropped on the floor
+     */
+    public void addItems(ArrayList<Item> items) {
+        for (Item item : items) {
+            final Coordinates currentLocation = item.getCurrentLocation();
+            cells[currentLocation.y][currentLocation.x].setCellItem(item.getItemType());
         }
     }
 }
