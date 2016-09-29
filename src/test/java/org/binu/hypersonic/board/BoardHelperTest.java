@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  */
 public class BoardHelperTest {
 
-    private char[] row;
+    private Cell[] row;
     private BoardHelper boardHelper;
 
     @Before
@@ -28,8 +28,8 @@ public class BoardHelperTest {
         boardHelper = new BoardHelper();
 
         assertThat("Row has 13 elements.", row.length, is(13));
-        for (char element : row) {
-            assertThat("Element is .", element, is('.'));
+        for (Cell element : row) {
+            assertThat("Element is .", element.getCellStatus(), is(CellStatus.EMPTY));
         }
     }
 
@@ -38,11 +38,11 @@ public class BoardHelperTest {
         row = boardHelper.convertRow(".0.0.0.0.0.0.");
         assertThat("Row has 13 elements.", row.length, is(13));
         boolean odd = true;
-        for (char element : row) {
+        for (Cell element : row) {
             if (odd) {
-                assertThat("Element is .", element, is('.'));
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.EMPTY));
             } else {
-                assertThat("Element is .", element, is('0'));
+                assertThat("Element is .", element.getCellStatus(), is(CellStatus.BOX));
             }
             odd = !odd;
         }
@@ -57,24 +57,38 @@ public class BoardHelperTest {
     public void should_get_empty_board_array() throws Exception {
         final String[] boardString = getEmptyBoardString();
 
-        char[][] board = boardHelper.convertBoard(boardString);
-        assertThat("Board is 13 high", board.length, is(13));
+        Board board = boardHelper.convertBoard(boardString);
+        final Cell[][] cells = board.getCells();
+        assertThat("Board is 11 high", cells.length, is(11));
 
-        for (int row = 0; row < board.length; row++) {
-            assertThat("Board row is 11 wide", board[row].length, is(11));
-            for (int col = 0; col < board[row].length; col++) {
-                assertThat("Board is empty", board[row][col], is('.'));
+        for (int y = 0; y < Board.BOARD_HEIGHT; y++) {
+            assertThat("Board row is 13 wide", cells[y].length, is(13));
+            for (int x = 0; x < Board.BOARD_WIDTH; x++) {
+                assertThat("Board cell is empty", cells[y][x].getCellStatus(), is(CellStatus.EMPTY));
             }
         }
+        board.printBoard();
     }
 
     @Test
-    public void should_get_a_box_at_12_0() throws Exception {
+    public void should_get_first_row_with_some_boxes() throws Exception {
         final String[] boardString = getEmptyBoardString();
-        boardString[0] = "............0";
-        char[][] board = boardHelper.convertBoard(boardString);
-
-        assertThat("There is a box at [12,0] ", board[12][0], is('0'));
+        boardString[0] = ".0.0.0.0.0.0.";
+        Board board = boardHelper.convertBoard(boardString);
+        final Cell[][] cells = board.getCells();
+        for (int y = 1; y < Board.BOARD_HEIGHT; y++) {
+            assertThat("Board row is 13 wide", cells[y].length, is(13));
+            for (int x = 0; x < Board.BOARD_WIDTH; x++) {
+                assertThat("Board cell is empty", cells[y][x].getCellStatus(), is(CellStatus.EMPTY));
+            }
+        }
+        for (int x = 0; x < Board.BOARD_WIDTH; x++) {
+            if (x % 2 == 0)
+                assertThat("Board cell is empty", cells[0][x].getCellStatus(), is(CellStatus.EMPTY));
+            else
+                assertThat("Board is cell is occupied by a box", cells[0][x].getCellStatus(), is(CellStatus.BOX));
+        }
+        board.printBoard();
     }
 
     @Test(expected = AssertionError.class)

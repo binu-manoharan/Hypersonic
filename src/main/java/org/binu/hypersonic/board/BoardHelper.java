@@ -5,23 +5,21 @@ package org.binu.hypersonic.board;
  */
 public class BoardHelper {
 
-    public static final int BOARD_WIDTH = 13;
-    public static final int BOARD_HEIGHT = 11;
     public static final char EMPTY_FLOOR = '.';
     public static final char BOX = '0';
 
-    public char[] convertRow(String rowString) {
-        char[] row = new char[BOARD_WIDTH];
-        assert BOARD_WIDTH == rowString.length();
+    public Cell[] convertRow(String rowString) {
+        Cell[] row = new Cell[Board.BOARD_WIDTH];
+        assert Board.BOARD_WIDTH == rowString.length();
 
-        for (int index = 0; index < BOARD_WIDTH; index++) {
+        for (int index = 0; index < Board.BOARD_WIDTH; index++) {
             final char charAtIndex = rowString.charAt(index);
             switch (charAtIndex) {
                 case EMPTY_FLOOR:
-                    row[index] = EMPTY_FLOOR;
+                    row[index] = new Cell(CellStatus.EMPTY);
                     break;
                 case BOX:
-                    row[index] = BOX;
+                    row[index] = new Cell(CellStatus.BOX);
                     break;
                 default:
                     assert false : "unhandled char in row string";
@@ -30,26 +28,15 @@ public class BoardHelper {
         return row;
     }
 
-    public char[][] convertBoard(String[] boardString) {
-        char[][] board = new char[BOARD_WIDTH][BOARD_HEIGHT];
+    public Board convertBoard(String[] boardString) {
+        final Board board = new Board();
 
-        assert BOARD_HEIGHT == boardString.length;
+        assert Board.BOARD_HEIGHT == boardString.length;
 
-        for (int y = 0; y < BOARD_HEIGHT; y++) {
-            final char[] column = convertRow(boardString[y]);
-            for (int x = 0; x < BOARD_WIDTH; x++) {
-                board[x][y] = column[x];
-            }
+        for (int y = 0; y < Board.BOARD_HEIGHT; y++) {
+            final Cell[] row = convertRow(boardString[y]);
+            board.setRow(y, row);
         }
-        //TODO replace with test
-//        System.err.println();
-//        for (int y = 0; y < BOARD_HEIGHT; y++) {
-//            for (int x = 0; x < BOARD_WIDTH; x++) {
-//                System.err.print(board[x][y]);
-//            }
-//            System.err.println();
-//        }
-
         return board;
     }
 }
