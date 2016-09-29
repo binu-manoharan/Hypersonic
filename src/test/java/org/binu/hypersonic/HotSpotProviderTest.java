@@ -1,6 +1,8 @@
 package org.binu.hypersonic;
 
 import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.board.Cell;
+import org.binu.hypersonic.board.CellItem;
 import org.binu.hypersonic.board.CellStatus;
 import org.junit.Before;
 import org.junit.Test;
@@ -135,5 +137,33 @@ public class HotSpotProviderTest {
         hotSpotProvider = new HotSpotProvider(board);
         final int boxesHit = hotSpotProvider.numberOfBoxesHit(3, 1, 3, 1, 3);
         assertThat("Should hit 4 boxes", boxesHit, is(4));
+    }
+
+    @Test
+    public void should_not_have_a_hotspot_at_0_0_as_item_obstructs() throws Exception {
+        board.setCellStatus(2, 0, CellStatus.BOX);
+        final Cell cell = board.getCell(1, 0);
+        cell.setCellItem(CellItem.BONUS_RANGE);
+        hotSpotProvider = new HotSpotProvider(board);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        assertThat("Should hit no boxes", boxesHit, is(0));
+    }
+
+    @Test
+    public void should_not_have_a_hotspot_at_0_0_as_bomb_obstructs() throws Exception {
+        board.setCellStatus(2, 0, CellStatus.BOX);
+//      TODO  set bomb at 1,0
+        hotSpotProvider = new HotSpotProvider(board);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        assertThat("Should hit no boxes", boxesHit, is(0));
+    }
+
+    @Test
+    public void should_not_have_a_hotspot_at_0_0_as_wall_obstructs() throws Exception {
+        board.setCellStatus(2, 0, CellStatus.BOX);
+        board.setCellStatus(1, 0, CellStatus.WALL);
+        hotSpotProvider = new HotSpotProvider(board);
+        final int boxesHit = hotSpotProvider.numberOfBoxesHit(0, 0, 0, 0, 3);
+        assertThat("Should hit no boxes", boxesHit, is(0));
     }
 }

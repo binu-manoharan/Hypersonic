@@ -8,5 +8,6 @@ import org.binu.hypersonic.Coordinates;
 public class Item extends Entity {
     public Item(Coordinates currentLocation, int param1) {
         super(0, currentLocation, param1, 0);
+        System.err.println("Item: [" + currentLocation.x + " " + currentLocation.y + "] " + param1 );
     }
 }

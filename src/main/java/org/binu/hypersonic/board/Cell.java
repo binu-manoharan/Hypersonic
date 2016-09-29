@@ -42,8 +42,11 @@ public class Cell {
         this.cellStatus = cellStatus;
     }
 
-
     public CellItem getCellItem() {
         return cellItem;
+    }
+
+    public void setCellItem(CellItem cellItem) {
+        this.cellItem = cellItem;
     }
 }

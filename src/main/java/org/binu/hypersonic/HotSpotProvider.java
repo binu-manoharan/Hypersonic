@@ -2,6 +2,7 @@ package org.binu.hypersonic;
 
 import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.Cell;
+import org.binu.hypersonic.board.CellItem;
 import org.binu.hypersonic.board.CellStatus;
 
 import java.util.ArrayList;
@@ -42,7 +43,14 @@ public class HotSpotProvider {
         }
 
         //TODO wall tests
-        final CellStatus cellStatus = board.getCell(x, y).getCellStatus();
+        final Cell currentCell = board.getCell(x, y);
+        final CellStatus cellStatus = currentCell.getCellStatus();
+        final CellItem cellItem = currentCell.getCellItem();
+
+        if (cellItem != null && (y != initialY || x != initialX)) {
+            return 0;
+        }
+
         if (cellStatus == CellStatus.WALL || (cellStatus == CellStatus.BOX && y == initialY && x == initialX)) {
             return 0;
         }
