@@ -1,5 +1,6 @@
 package template;
 
+import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.BoardHelper;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.MadBomber;
@@ -63,7 +64,7 @@ class Player {
             assert myBomber != null;
 
             //data conversions
-            final char[][] board = boardHelper.convertBoard(boardString);
+            final Board board = boardHelper.convertBoard(boardString);
             MadBomber madBomber = new MadBomber(myBomber, board, bombers, bombs);
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
