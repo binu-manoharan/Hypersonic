@@ -24,6 +24,8 @@ public abstract class Entity {
             return 0;
         } else if (this instanceof Bomb) {
             return 1;
+        } else if (this instanceof Item) {
+            return 2;
         } else {
             assert false : "Another ghost lurking around in the code.";
             return -1;

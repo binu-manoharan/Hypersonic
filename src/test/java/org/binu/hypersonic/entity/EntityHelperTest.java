@@ -34,4 +34,11 @@ public class EntityHelperTest {
         assertThat("Entity is a bomb", entity instanceof Bomb, is(true));
         assertThat("EntityType is bomb", entity.getEntityType(), is(1));
     }
+
+    @Test
+    public void should_create_item() throws Exception {
+        final Entity entity = entityHelper.createEntity(2, 0, coordinates, 1, 3);
+        assertThat("Entity is a item", entity instanceof Item, is(true));
+        assertThat("EntityType is bomb", entity.getEntityType(), is(2));
+    }
 }
