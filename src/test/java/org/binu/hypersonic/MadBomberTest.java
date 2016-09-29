@@ -34,7 +34,7 @@ public class MadBomberTest {
 
     @Test
     public void should_be_nothing_for_the_bomber_to_do_in_a_totally_empty_board() throws Exception {
-        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
+        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
         final Coordinates currentLocation = bomber.getCurrentLocation();
@@ -45,7 +45,7 @@ public class MadBomberTest {
     @Test
     public void should_try_to_move_closer_to_box() throws Exception {
         emptyBoard.setCellStatus(0, 0, CellStatus.BOX);
-        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
+        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
         assertThat("Bomber move is move [1,0]", bomberMove.render(), is("MOVE 1 0"));
@@ -55,7 +55,7 @@ public class MadBomberTest {
     public void should_try_to_bomb_the_box() throws Exception {
         emptyBoard.setCellStatus(0, 0, CellStatus.BOX);
         bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(1, 0), 1, 3);
-        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
+        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
         assertThat("Bomber move is MOVE [1,0]", bomberMove.render(), is("BOMB 1 0"));

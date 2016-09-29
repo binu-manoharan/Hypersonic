@@ -1,8 +1,10 @@
 package org.binu.hypersonic.board;
 
+import org.binu.hypersonic.TestHelper;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.binu.hypersonic.TestHelper.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -36,6 +38,7 @@ public class BoardTest {
 
     @Test
     public void should_print_an_empty_board() throws Exception {
+        board = getEmptyBoard();
         board.printBoard();
     }
 }

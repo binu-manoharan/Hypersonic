@@ -3,6 +3,7 @@ package org.binu.hypersonic;
 import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
+import org.binu.hypersonic.entity.Item;
 import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
@@ -21,13 +22,15 @@ public class MadBomber {
     private Board board;
     private final List<Bomber> bombers;
     private final List<Bomb> bombs;
+    private final List<Item> items;
     private HotSpotProvider hotSpotProvider;
 
-    public MadBomber(Bomber myBomber, Board board, List<Bomber> bombers, List<Bomb> bombs) {
+    public MadBomber(Bomber myBomber, Board board, List<Bomber> bombers, List<Bomb> bombs, List<Item> items) {
         this.myBomber = myBomber;
         this.board = board;
         this.bombers = bombers;
         this.bombs = bombs;
+        this.items = items;
     }
 
     public BomberMove calculateNextMove() {

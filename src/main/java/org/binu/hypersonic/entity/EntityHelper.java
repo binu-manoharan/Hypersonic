@@ -28,6 +28,8 @@ public class EntityHelper {
                 return new Bomber(owner, coordinates, param1, param2);
             case 1:
                 return new Bomb(owner, coordinates, param1, param2);
+            case 2:
+                return new Item(coordinates, param1);
             default:
                 assert false : "Invalid entity: we don't harbour ghosts. Go away!";
                 return null;

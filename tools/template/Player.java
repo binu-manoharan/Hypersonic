@@ -4,10 +4,7 @@ import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.BoardHelper;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.MadBomber;
-import org.binu.hypersonic.entity.Bomb;
-import org.binu.hypersonic.entity.Bomber;
-import org.binu.hypersonic.entity.Entity;
-import org.binu.hypersonic.entity.EntityHelper;
+import org.binu.hypersonic.entity.*;
 import org.binu.hypersonic.move.BomberMove;
 
 import java.util.ArrayList;
@@ -38,6 +35,7 @@ class Player {
             int entities = in.nextInt();
             final ArrayList<Bomber> bombers = new ArrayList<>();
             final ArrayList<Bomb> bombs = new ArrayList<>();
+            final ArrayList<Item> items = new ArrayList<>();
             Bomber myBomber = null;
             for (int i = 0; i < entities; i++) {
                 int entityType = in.nextInt();
@@ -56,6 +54,8 @@ class Player {
                     bombers.add((Bomber) entity);
                 } else if (entity.getEntityType() == 1) {
                     bombs.add((Bomb) entity);
+                } else if (entity.getEntityType() == 2) {
+                    items.add((Item) entity);
                 } else {
                     assert false : "Uh oh, we have a Unknown entity here!";
                 }
@@ -65,7 +65,7 @@ class Player {
 
             //data conversions
             final Board board = boardHelper.convertBoard(boardString);
-            MadBomber madBomber = new MadBomber(myBomber, board, bombers, bombs);
+            MadBomber madBomber = new MadBomber(myBomber, board, bombers, bombs, items);
             // Write an action using System.out.println()
             // To debug: System.err.println("Debug messages...");
 
