@@ -7,9 +7,6 @@ import org.binu.hypersonic.board.CellStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.binu.hypersonic.board.Board.BOARD_HEIGHT;
-import static org.binu.hypersonic.board.Board.BOARD_WIDTH;
-
 /**
  * Find all hotspots
  */
@@ -24,8 +21,8 @@ public class HotSpotProvider {
 
     public List<HotSpot> getAllHotSpots(int range) {
         final Cell[][] cells = board.getCells();
-        for (int y = 0; y < BOARD_HEIGHT; y++) {
-            for (int x = 0; x < BOARD_WIDTH; x++) {
+        for (int y = 0; y < Board.BOARD_HEIGHT; y++) {
+            for (int x = 0; x < Board.BOARD_WIDTH; x++) {
                 final int numberOfBoxesHit = numberOfBoxesHit(x, y, x, y, range);
                 cells[y][x].setNumberOfBoxesHit(numberOfBoxesHit);
                 if (numberOfBoxesHit > 0) {
@@ -40,7 +37,7 @@ public class HotSpotProvider {
     public int numberOfBoxesHit(int initialX, int initialY, int x, int y, int range) {
         int boxesHit = 0;
 
-        if (x < 0 || x >= BOARD_WIDTH || y < 0 || y >= BOARD_HEIGHT) {
+        if (x < 0 || x >= Board.BOARD_WIDTH || y < 0 || y >= Board.BOARD_HEIGHT) {
             return 0;
         }
 
