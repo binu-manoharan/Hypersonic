@@ -23,7 +23,7 @@ public class HotSpotProvider {
         final Cell[][] cells = board.getCells();
         for (int y = 0; y < Board.BOARD_HEIGHT; y++) {
             for (int x = 0; x < Board.BOARD_WIDTH; x++) {
-                final int numberOfBoxesHit = numberOfBoxesHit(x, y, x, y, range);
+                final int numberOfBoxesHit = numberOfBoxesHit(y, x, y, x, range);
                 cells[y][x].setNumberOfBoxesHit(numberOfBoxesHit);
                 if (numberOfBoxesHit > 0) {
                     allHotSpots.add(new HotSpot(x, y, numberOfBoxesHit));
@@ -34,35 +34,35 @@ public class HotSpotProvider {
         return allHotSpots;
     }
 
-    public int numberOfBoxesHit(int initialX, int initialY, int x, int y, int range) {
+    public int numberOfBoxesHit(int initialY, int initialX, int y, int x, int range) {
         int boxesHit = 0;
 
-        if (x < 0 || x >= Board.BOARD_WIDTH || y < 0 || y >= Board.BOARD_HEIGHT) {
+        if (y < 0 || y >= Board.BOARD_HEIGHT || x < 0 || x >= Board.BOARD_WIDTH) {
             return 0;
         }
 
-        final boolean rowRange = Math.abs(initialX - x) == range;
-        final boolean colRange = Math.abs(initialY - y) == range;
+        final boolean rowRange = Math.abs(initialY - y) == range;
+        final boolean colRange = Math.abs(initialX - x) == range;
         if (rowRange || colRange) {
             return 0;
         }
 
-        if (board.getCell(x, y).getCellStatus() == CellStatus.BOX && (x != initialX || y != initialY)) {
+        if (board.getCell(x, y).getCellStatus() == CellStatus.BOX && (y != initialY || x != initialX)) {
             return 1;
-        }
-
-        if (initialY == y) {
-            if (x <= initialX)
-                boxesHit += numberOfBoxesHit(initialX, initialY, x - 1, y, range);
-            if (x >= initialX)
-                boxesHit += numberOfBoxesHit(initialX, initialY, x + 1, y, range);
         }
 
         if (initialX == x) {
             if (y <= initialY)
-                boxesHit += numberOfBoxesHit(initialX, initialY, x, y - 1, range);
+                boxesHit += numberOfBoxesHit(initialY, initialX, y - 1, x, range);
             if (y >= initialY)
-                boxesHit += numberOfBoxesHit(initialX, initialY, x, y + 1, range);
+                boxesHit += numberOfBoxesHit(initialY, initialX, y + 1, x, range);
+        }
+
+        if (initialY == y) {
+            if (x <= initialX)
+                boxesHit += numberOfBoxesHit(initialY, initialX, y, x - 1, range);
+            if (x >= initialX)
+                boxesHit += numberOfBoxesHit(initialY, initialX, y, x + 1, range);
         }
         return boxesHit;
     }

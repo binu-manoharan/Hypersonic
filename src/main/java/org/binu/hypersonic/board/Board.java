@@ -13,16 +13,12 @@ public class Board {
         cells = new Cell[BOARD_HEIGHT][BOARD_WIDTH];
     }
 
-    void setCell(int x, int y, Cell cell) {
-        cells[x][y] = cell;
-    }
-
     void setRow(int rowIndex, Cell[] rowCells) {
         this.cells[rowIndex] = rowCells;
     }
 
-    public Cell[] getRow(int index) {
-        return cells[index];
+    public Cell[] getRow(int rowIndex) {
+        return cells[rowIndex];
     }
 
     public void printBoard() {
