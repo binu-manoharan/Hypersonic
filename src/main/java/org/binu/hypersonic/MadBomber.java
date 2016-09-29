@@ -1,5 +1,6 @@
 package org.binu.hypersonic;
 
+import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.move.BombXY;
@@ -17,12 +18,12 @@ import java.util.List;
 public class MadBomber {
 
     private final Bomber myBomber;
-    private final char[][] board;
+    private Board board;
     private final List<Bomber> bombers;
     private final List<Bomb> bombs;
     private HotSpotProvider hotSpotProvider;
 
-    public MadBomber(Bomber myBomber, char[][] board, List<Bomber> bombers, List<Bomb> bombs) {
+    public MadBomber(Bomber myBomber, Board board, List<Bomber> bombers, List<Bomb> bombs) {
         this.myBomber = myBomber;
         this.board = board;
         this.bombers = bombers;

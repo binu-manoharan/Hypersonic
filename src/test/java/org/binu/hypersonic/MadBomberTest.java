@@ -1,5 +1,7 @@
 package org.binu.hypersonic;
 
+import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.board.CellStatus;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.EntityHelper;
 import org.binu.hypersonic.move.BomberMove;
@@ -19,7 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class MadBomberTest {
 
-    private char[][] emptyBoard;
+    private Board emptyBoard;
     private Bomber bomber;
     private EntityHelper entityHelper;
 
@@ -27,7 +29,7 @@ public class MadBomberTest {
     public void setUp() throws Exception {
         emptyBoard = getEmptyBoard();
         entityHelper = new EntityHelper();
-        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(0, 10), 1, 3);
+        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(10, 0), 1, 3);
     }
 
     @Test
@@ -42,20 +44,20 @@ public class MadBomberTest {
 
     @Test
     public void should_try_to_move_closer_to_box() throws Exception {
-        emptyBoard[0][0] = '0';
+        emptyBoard.setCellStatus(0, 0, CellStatus.BOX);
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
-        assertThat("Bomber move is move [0,1]", bomberMove.render(), is("MOVE 0 1"));
+        assertThat("Bomber move is move [1,0]", bomberMove.render(), is("MOVE 1 0"));
     }
 
     @Test
     public void should_try_to_bomb_the_box() throws Exception {
-        emptyBoard[0][0] = '0';
-        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(0, 1), 1, 3);
+        emptyBoard.setCellStatus(0, 0, CellStatus.BOX);
+        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(1, 0), 1, 3);
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
-        assertThat("Bomber move is bomb [0,1]", bomberMove.render(), is("BOMB 0 1"));
+        assertThat("Bomber move is MOVE [1,0]", bomberMove.render(), is("BOMB 1 0"));
     }
 }
