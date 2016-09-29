@@ -1,5 +1,7 @@
 package org.binu.hypersonic.board;
 
+import org.binu.hypersonic.Coordinates;
+
 /**
  * Board containing the game grid and all cells
  */
@@ -40,5 +42,9 @@ public class Board {
 
     public void setCellStatus(int x, int y, CellStatus cellStatus) {
         cells[y][x].setCellStatus(cellStatus);
+    }
+
+    public CellStatus getCellStatus(Coordinates coordinates) {
+        return cells[coordinates.y][coordinates.x].getCellStatus();
     }
 }

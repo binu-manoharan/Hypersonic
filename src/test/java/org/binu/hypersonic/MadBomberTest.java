@@ -73,6 +73,6 @@ public class MadBomberTest {
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
-//        assertThat("Bomber move is BOMB [1,0]", bomberMove.render(), is("BOMB 1 0"));
+        assertThat("Bomber move is BOMB [1,0]", bomberMove.render(), is("BOMB 1 0"));
     }
 }
