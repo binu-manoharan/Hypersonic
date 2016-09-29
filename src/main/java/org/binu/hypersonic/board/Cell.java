@@ -24,9 +24,11 @@ public class Cell {
 
     String getCellPrint() {
         if (cellStatus == CellStatus.EMPTY)
-            return "X";
+            return ".";
         else if (cellStatus == CellStatus.BOX)
             return "B";
+        else if (cellStatus == CellStatus.WALL)
+            return "X";
         else
             return "*";
 

@@ -40,7 +40,6 @@ public class MadBomber {
             Collections.sort(allHotSpots);
             final Coordinates firstCoordinate = allHotSpots.get(0).getCoordinates();
             final Coordinates myCurrentLocation = myBomber.getCurrentLocation();
-            System.err.println(allHotSpots.get(0).getNumBoxes());
             if (myCurrentLocation.equals(firstCoordinate)) {
                 return new BombXY(firstCoordinate);
             }

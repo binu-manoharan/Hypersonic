@@ -58,6 +58,21 @@ public class MadBomberTest {
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
-        assertThat("Bomber move is MOVE [1,0]", bomberMove.render(), is("BOMB 1 0"));
+        assertThat("Bomber move is BOMB [1,0]", bomberMove.render(), is("BOMB 1 0"));
+    }
+
+    @Test
+    public void should_try_bomb_the_box_at_1_0_as_others_are_unreachable() throws Exception {
+        emptyBoard.setCellStatus(1, 1, CellStatus.WALL);
+        emptyBoard.setCellStatus(2, 0, CellStatus.BOX);
+        emptyBoard.setCellStatus(0, 2, CellStatus.WALL);
+        emptyBoard.setCellStatus(4, 0, CellStatus.BOX);
+        emptyBoard.printBoard();
+
+        bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(1, 0), 1, 3);
+        MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
+        final BomberMove bomberMove = madBomber.calculateNextMove();
+        assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
+//        assertThat("Bomber move is BOMB [1,0]", bomberMove.render(), is("BOMB 1 0"));
     }
 }
