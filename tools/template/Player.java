@@ -7,10 +7,7 @@ import org.binu.hypersonic.MadBomber;
 import org.binu.hypersonic.entity.*;
 import org.binu.hypersonic.move.BomberMove;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Auto-generated code below aims at helping you parse
@@ -29,6 +26,7 @@ class Player {
         EntityHelper entityHelper = new EntityHelper();
         // game loop
         while (true) {
+            final long startTime = new Date().getTime();
             String[] boardString = new String[height];
             for (int i = 0; i < height; i++) {
                 boardString[i] = in.nextLine();
@@ -74,6 +72,8 @@ class Player {
             // To debug: System.err.println("Debug messages...");
 
             final BomberMove move = madBomber.calculateNextMove();
+            final long endTime = new Date().getTime();
+            System.err.println("Exec Time: " + (endTime - startTime) + " ms.");
             System.out.println(move.render());
         }
     }
