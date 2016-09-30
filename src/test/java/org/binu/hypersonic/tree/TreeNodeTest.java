@@ -6,6 +6,8 @@ import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.board.CellStatus;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.EntityHelper;
+import org.binu.hypersonic.move.BombXY;
+import org.binu.hypersonic.move.MoveXY;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -68,6 +70,12 @@ public class TreeNodeTest {
         final List availableMoves = treeNode.getAvailableMoves();
         assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
         assertThat("Bomber has moves.", availableMoves.size(), is(6));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(0,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(0,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(0,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(0,1))), is(true));
     }
 
     @Test
@@ -78,7 +86,29 @@ public class TreeNodeTest {
         final List availableMoves = treeNode.getAvailableMoves();
         assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
         assertThat("Bomber has moves.", availableMoves.size(), is(6));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(2,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,2))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(2,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,2))), is(true));
     }
 
-
+    @Test
+    public void should_get_10_valid_moves_for_a_bomber_with_bombs_at_1_1() throws Exception {
+        initTreeNode(1, new Coordinates(1, 1));
+        final List availableMoves = treeNode.getAvailableMoves();
+        assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
+        assertThat("Bomber has moves.", availableMoves.size(), is(10));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(0,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(2,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new MoveXY(new Coordinates(1,2))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,0))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(0,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(2,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,1))), is(true));
+        assertThat("AvailableMove contains element.", availableMoves.contains(new BombXY(new Coordinates(1,2))), is(true));
+    }
 }
