@@ -21,11 +21,15 @@ public class HeatApplicator {
         this.board = board;
         cells = board.getCells();
         for (Bomb bomb : bombs) {
-            final int heat = bomb.getHeat();
-            final int range = bomb.getRange();
-            final Coordinates bombCoordinates = bomb.getCoordinates();
-            applyHeat(bombCoordinates, bombCoordinates, heat, range);
+            applyHeat(bomb);
         }
+    }
+
+    private void applyHeat(Bomb bomb) {
+        final int heat = bomb.getHeat();
+        final int range = bomb.getRange();
+        final Coordinates bombCoordinates = bomb.getCoordinates();
+        applyHeat(bombCoordinates, bombCoordinates, heat, range);
     }
 
     private void applyHeat(Coordinates initialBombCoordinates, Coordinates bombCoordinates, int heat, int range) {
@@ -45,9 +49,19 @@ public class HeatApplicator {
             return;
         }
 
-//        if (cellStatus == CellStatus.BOMB) {
-//            return;
-//        }
+        if (cellStatus == CellStatus.BOMB) {
+            final int bombIndex = bombs.indexOf(new Bomb(-1, bombCoordinates, 0, 0));
+            final Bomb foundBomb = bombs.get(bombIndex);
+
+            assert foundBomb != null;
+            if (foundBomb.getHeat() > heat) {
+                foundBomb.setHeat(heat);
+                final int initialBombIndex = bombs.indexOf(new Bomb(-1, initialBombCoordinates, 0, 0));
+                if (initialBombIndex > bombIndex) {
+                    applyHeat(foundBomb);
+                }
+            }
+        }
 
         final int currentCellHeat = currentCell.getHeat();
 

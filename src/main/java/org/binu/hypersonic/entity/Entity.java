@@ -39,4 +39,23 @@ public abstract class Entity {
     public int getRange() {
         return param2;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Entity)) return false;
+
+        Entity entity = (Entity) o;
+//        TODO may be this is needed but we shouldn't be comparing different types of entities.
+//        if (this.getEntityType() != entity.getEntityType()){
+//            return false;
+//        }
+        return coordinates != null && coordinates.equals(entity.coordinates);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return coordinates != null ? coordinates.hashCode() : 0;
+    }
 }

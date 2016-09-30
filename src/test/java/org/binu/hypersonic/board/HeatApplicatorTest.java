@@ -18,6 +18,8 @@ public class HeatApplicatorTest {
     private static final Coordinates COORDINATES_0_0 = new Coordinates(0, 0);
     private static final int HEAT_7 = 7;
     private static final Coordinates COORDINATES_3_3 = new Coordinates(3, 3);
+    public static final Coordinates COORDINATES_1_0 = new Coordinates(1, 0);
+    public static final int HEAT_5 = 5;
     private Board board;
     private EntityHelper entityHelper;
 
@@ -51,6 +53,16 @@ public class HeatApplicatorTest {
         assertCellHeat(2, 4, 0);
     }
 
+    @Test
+    public void should_calculate_heat_for_two_bombs() throws Exception {
+        final Bomb bomb1 = (Bomb) entityHelper.createEntity(1, 0, COORDINATES_0_0, HEAT_7, RANGE_3);
+        final Bomb bomb2 = (Bomb) entityHelper.createEntity(1, 0, COORDINATES_1_0, HEAT_5, RANGE_3);
+        board.addBomb(bomb1);
+        board.addBomb(bomb2);
+        board.calculateHeat();
+        assertHeatInRange(COORDINATES_1_0, HEAT_5, RANGE_3);
+        assertHeatInRange(COORDINATES_0_0, HEAT_5, RANGE_3);
+    }
 
     private void assertHeatInRange(Coordinates coordinates, int heat, int range) {
         for (int y = -range + 1; y < range; y++) {

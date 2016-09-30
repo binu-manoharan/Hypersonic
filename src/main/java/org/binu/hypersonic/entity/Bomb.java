@@ -13,4 +13,8 @@ public class Bomb extends Entity {
     public int getHeat() {
         return param1;
     }
+
+    public void setHeat(int heat) {
+        this.param1 = heat;
+    }
 }
