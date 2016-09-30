@@ -43,14 +43,14 @@ public class HeatApplicatorTest {
         board.addBomb(bomb);
         board.calculateHeat();
         assertHeatInRange(COORDINATES_3_3, HEAT_7, RANGE_3);
-        assertCellHeat(3, 0, 0);
-        assertCellHeat(0, 3, 0);
-        assertCellHeat(6, 3, 0);
-        assertCellHeat(3, 6, 0);
-        assertCellHeat(2, 2, 0);
-        assertCellHeat(4, 4, 0);
-        assertCellHeat(4, 2, 0);
-        assertCellHeat(2, 4, 0);
+        assertCellHeat(3, 0, -1);
+        assertCellHeat(0, 3, -1);
+        assertCellHeat(6, 3, -1);
+        assertCellHeat(3, 6, -1);
+        assertCellHeat(2, 2, -1);
+        assertCellHeat(4, 4, -1);
+        assertCellHeat(4, 2, -1);
+        assertCellHeat(2, 4, -1);
     }
 
     @Test

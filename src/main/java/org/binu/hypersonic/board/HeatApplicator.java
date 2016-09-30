@@ -65,7 +65,7 @@ public class HeatApplicator {
 
         final int currentCellHeat = currentCell.getHeat();
 
-        if (currentCellHeat == 0 || currentCellHeat > heat) {
+        if (currentCellHeat == -1 || currentCellHeat > heat) {
             currentCell.setHeat(heat);
         }
 

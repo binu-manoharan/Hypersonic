@@ -11,11 +11,13 @@ public class Cell {
 
     public Cell(CellStatus cellStatus) {
         this.cellStatus = cellStatus;
+        heat = -1;
     }
 
     public Cell(CellStatus cellStatus, CellItem cellItem) {
         this.cellStatus = cellStatus;
         this.cellItem = cellItem;
+        heat = -1;
     }
 
 
