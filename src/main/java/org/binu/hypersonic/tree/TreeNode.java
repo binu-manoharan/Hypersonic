@@ -2,7 +2,9 @@ package org.binu.hypersonic.tree;
 
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
+import org.binu.hypersonic.move.AbstractBomberMove;
 import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
@@ -46,5 +48,16 @@ public class TreeNode {
         }
 
         return moves;
+    }
+
+    public void applyMove(BomberMove bomberMove) {
+        if (bomberMove.getMoveCode() == AbstractBomberMove.BOMB_CODE) {
+            final Bomb bomb = new Bomb(bomber.getOwnerId(), bomber.getCoordinates(), Bomb.BOMB_HEAT, bomber.getRange());
+            board.addBomb(bomb);
+            board.calculateHeat();
+        }
+
+        final Coordinates coordinates = bomberMove.getCoordinates();
+        bomber.setCoordinates(coordinates);
     }
 }

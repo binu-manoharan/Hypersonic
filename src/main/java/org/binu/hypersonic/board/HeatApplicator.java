@@ -25,7 +25,7 @@ public class HeatApplicator {
         }
     }
 
-    private void applyHeat(Bomb bomb) {
+    public void applyHeat(Bomb bomb) {
         final int heat = bomb.getHeat();
         final int range = bomb.getRange();
         final Coordinates bombCoordinates = bomb.getCoordinates();

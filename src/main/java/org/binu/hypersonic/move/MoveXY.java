@@ -12,6 +12,11 @@ public class MoveXY extends AbstractBomberMove {
     }
 
     @Override
+    public char getMoveCode() {
+        return MOVE_CODE;
+    }
+
+    @Override
     public String render() {
         return "MOVE " + coordinates.x + " " + coordinates.y;
     }

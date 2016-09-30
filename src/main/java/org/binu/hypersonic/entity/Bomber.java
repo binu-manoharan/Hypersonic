@@ -13,4 +13,8 @@ public class Bomber extends Entity {
     public boolean canPlaceBombs() {
         return param1 > 0;
     }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
 }

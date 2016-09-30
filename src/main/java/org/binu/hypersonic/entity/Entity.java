@@ -7,8 +7,8 @@ import org.binu.hypersonic.Coordinates;
  * I guess bomber works closely with a bomb? :o
  */
 public abstract class Entity {
-    private int ownerId;
-    private Coordinates coordinates;
+    protected int ownerId;
+    protected Coordinates coordinates;
     protected int param1;
     protected int param2;
 
@@ -57,5 +57,9 @@ public abstract class Entity {
     @Override
     public int hashCode() {
         return coordinates != null ? coordinates.hashCode() : 0;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 }

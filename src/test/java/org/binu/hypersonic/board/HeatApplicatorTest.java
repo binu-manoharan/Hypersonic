@@ -20,6 +20,11 @@ public class HeatApplicatorTest {
     private static final Coordinates COORDINATES_3_3 = new Coordinates(3, 3);
     public static final Coordinates COORDINATES_1_0 = new Coordinates(1, 0);
     public static final int HEAT_5 = 5;
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     private Board board;
     private EntityHelper entityHelper;
 
@@ -64,7 +69,7 @@ public class HeatApplicatorTest {
         assertHeatInRange(COORDINATES_0_0, HEAT_5, RANGE_3);
     }
 
-    private void assertHeatInRange(Coordinates coordinates, int heat, int range) {
+    public void assertHeatInRange(Coordinates coordinates, int heat, int range) {
         for (int y = -range + 1; y < range; y++) {
             for (int x = -range + 1; x < range; x++) {
                 final int xNew = coordinates.x + x;

@@ -6,6 +6,8 @@ import org.binu.hypersonic.Coordinates;
  * Abstract class to handle moves.
  */
 public abstract class AbstractBomberMove implements BomberMove {
+    public static final char BOMB_CODE = 'B';
+    public static final char MOVE_CODE = 'M';
     protected final Coordinates coordinates;
 
     public AbstractBomberMove(Coordinates coordinates) {
