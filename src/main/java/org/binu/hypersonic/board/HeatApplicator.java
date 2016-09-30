@@ -31,6 +31,19 @@ public class HeatApplicator {
         }
     }
 
+    public void removeExpiredBombs() {
+        List<Bomb> bombsToRemove = new ArrayList<>();
+        for (Bomb bomb : bombs) {
+            if(bomb.getHeat() == -1) {
+                bombsToRemove.add(bomb);
+                final Coordinates coordinates = bomb.getCoordinates();
+                cells[coordinates.y][coordinates.x].setCellStatus(CellStatus.EMPTY);
+            }
+        }
+
+        bombs.removeAll(bombsToRemove);
+    }
+
     /**
      * Applies heat for a bomb.
      * To be called with caution. It doesn't initialise the board.
@@ -61,11 +74,12 @@ public class HeatApplicator {
         }
 
         if (cellStatus == CellStatus.BOMB) {
+            System.err.println("Bomb coordinates: [" + bombCoordinates.x + "," + bombCoordinates.y + "]" );
             final int bombIndex = bombs.indexOf(new Bomb(-1, bombCoordinates, 0, 0));
             final Bomb foundBomb = bombs.get(bombIndex);
 
             assert foundBomb != null;
-            if (foundBomb.getHeat() > heat) {
+            if (foundBomb.getHeat() > heat && heat > -1) {
                 foundBomb.setHeat(heat);
                 final int initialBombIndex = bombs.indexOf(new Bomb(-1, initialBombCoordinates, 0, 0));
                 if (initialBombIndex > bombIndex) {
@@ -115,5 +129,11 @@ public class HeatApplicator {
 
     public List<Bomb> getBombs() {
         return bombs;
+    }
+
+    public void tickBombs() {
+        for (Bomb bomb : bombs) {
+            bomb.tickHeat();
+        }
     }
 }

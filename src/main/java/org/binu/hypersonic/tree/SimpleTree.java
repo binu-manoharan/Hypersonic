@@ -1,6 +1,8 @@
 package org.binu.hypersonic.tree;
 
+import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.board.Cell;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.Item;
@@ -20,6 +22,11 @@ public class SimpleTree {
     Random random = new Random();
     private int count = 0;
 
+    public SimpleTree() {
+        random = new Random();
+        count = 0;
+    }
+
     public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items) {
         board.addBombs(bombs);
         TreeNode rootNode = new TreeNode(board, myBomber);
@@ -38,6 +45,15 @@ public class SimpleTree {
             count++;
 //            board.printBoard();
 //            System.err.println("*************");
+            return;
+        }
+
+        final Coordinates bomberCoordinates = bomber.getCoordinates();
+        board.tickBombs();
+        board.calculateHeat();
+        final Cell bomberCell = board.getCell(bomberCoordinates);
+        if (bomberCell.getHeat() == 0) {
+            //TODO propagate loss
             return;
         }
 

@@ -151,7 +151,7 @@ public class TreeNodeTest {
         }
         final Coordinates bomberOldCoordinates = bomber.getCoordinates();
         treeNode.applyMove(bomberMove);
-
+        board.calculateHeat();
         final CellStatus cellStatus = board.getCellStatus(bomberOldCoordinates);
         assertThat("Bomb has been placed on bombers previous coordinate.", cellStatus, is(CellStatus.BOMB));
 

@@ -1,6 +1,7 @@
 package org.binu.hypersonic.board;
 
 import org.binu.hypersonic.Coordinates;
+import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.EntityHelper;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class BoardTest {
 
+    public static final Coordinates COORDINATES_0_0 = new Coordinates(0, 0);
+    public static final int HEAT_5 = 5;
+    public static final int HEAT_0 = 0;
+    public static final int HEAT_1 = 1;
     private Board board;
     private Cell[] rowCells;
     private EntityHelper entityHelper;
@@ -101,7 +106,38 @@ public class BoardTest {
     @Test
     public void should_not_be_able_to_move_to_cell_with_bomb() throws Exception {
         board.setCellStatus(0, 0, CellStatus.BOMB);
-        final boolean isMovable = board.coordinateIsMovable(new Coordinates(0, 0));
+        final boolean isMovable = board.coordinateIsMovable(COORDINATES_0_0);
         assertThat("0, 0 is not movable.", isMovable, is(false));
+    }
+
+    @Test
+    public void should_reduce_heat_by_1_for_bomb() throws Exception {
+        board.addBomb((Bomb)entityHelper.createEntity(1, 0, COORDINATES_0_0, HEAT_5, 3));
+        board.tickBombs();
+        board.calculateHeat();
+        final Cell cell = board.getCell(0, 0);
+        assertThat("0, 0 heat.", cell.getHeat(), is(HEAT_5 - 1));
+    }
+
+    @Test
+    public void should_set_heat_to_0_and_not_remove_bomb() throws Exception {
+        board.addBomb((Bomb)entityHelper.createEntity(1, 0, COORDINATES_0_0, HEAT_1, 3));
+        board.tickBombs();
+        board.calculateHeat();
+        final Cell cell = board.getCell(0, 0);
+        assertThat("0, 0 heat.", cell.getHeat(), is(HEAT_1 - 1));
+        assertThat("Bomb has been removed.", board.getHeatApplicator().getBombs().size(), is(1));
+    }
+
+    @Test
+    public void should_reset_heat_and_remove_bomb() throws Exception {
+        board.addBomb((Bomb)entityHelper.createEntity(1, 0, COORDINATES_0_0, HEAT_0, 3));
+        //this is needed to initialise the board on heat applicator
+        board.calculateHeat();
+        board.tickBombs();
+        board.calculateHeat();
+        final Cell cell = board.getCell(0, 0);
+        assertThat("0, 0 heat.", cell.getHeat(), is(HEAT_0 - 1));
+        assertThat("Bomb has been removed.", board.getHeatApplicator().getBombs().size(), is(0));
     }
 }

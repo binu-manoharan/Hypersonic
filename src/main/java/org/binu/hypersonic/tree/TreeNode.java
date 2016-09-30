@@ -60,7 +60,6 @@ public class TreeNode {
         if (bomberMove.getMoveCode() == AbstractBomberMove.BOMB_CODE) {
             final Bomb bomb = new Bomb(bomber.getOwnerId(), bomber.getCoordinates(), Bomb.BOMB_HEAT, bomber.getRange());
             board.addBomb(bomb);
-            board.calculateHeat();
         }
 
         final Coordinates coordinates = bomberMove.getCoordinates();

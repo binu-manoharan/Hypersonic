@@ -98,7 +98,7 @@ public class Board {
         return validMoves;
     }
 
-    private Cell getCell(Coordinates coordinates) {
+    public Cell getCell(Coordinates coordinates) {
         return cells[coordinates.y][coordinates.x];
     }
 
@@ -107,6 +107,11 @@ public class Board {
     }
 
     public void calculateHeat() {
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                cells[y][x].setHeat(-1);
+            }
+        }
         heatApplicator.applyHeat(this);
     }
 
@@ -119,5 +124,10 @@ public class Board {
 
     public HeatApplicator getHeatApplicator() {
         return heatApplicator;
+    }
+
+    public void tickBombs() {
+        heatApplicator.tickBombs();
+        heatApplicator.removeExpiredBombs();
     }
 }
