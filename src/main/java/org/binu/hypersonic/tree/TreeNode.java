@@ -35,6 +35,9 @@ public class TreeNode {
         final ArrayList<Coordinates> validMoveCoordinates = board.getValidMoves(bomberCoordinates);
 
         moves.add(new MoveXY(bomberCoordinates));
+        if (bomber.canPlaceBombs()) {
+            moves.add(new BombXY(bomberCoordinates));
+        }
         for (Coordinates validMoveCoordinate : validMoveCoordinates) {
             moves.add(new MoveXY(validMoveCoordinate));
             if (bomber.canPlaceBombs()) {

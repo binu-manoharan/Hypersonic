@@ -46,9 +46,9 @@ public class TreeNodeTest {
 
     @Test
     public void should_get_2_valid_moves_for_bomber_at_1_1_with_three_obstacles() throws Exception {
-        emptyBoard.setCellStatus(0,1, CellStatus.BOMB);
-        emptyBoard.setCellStatus(1,0, CellStatus.BOX);
-        emptyBoard.setCellStatus(1,2, CellStatus.WALL);
+        emptyBoard.setCellStatus(0, 1, CellStatus.BOMB);
+        emptyBoard.setCellStatus(1, 0, CellStatus.BOX);
+        emptyBoard.setCellStatus(1, 2, CellStatus.WALL);
         final List availableMoves = treeNode.getAvailableMoves();
         assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
         assertThat("Bomber has moves.", availableMoves.size(), is(2));
@@ -63,10 +63,22 @@ public class TreeNodeTest {
     }
 
     @Test
-    public void should_get_5_valid_moves_for_a_bomber_with_bombs_at_0_0() throws Exception {
+    public void should_get_6_valid_moves_for_a_bomber_with_bombs_at_0_0() throws Exception {
         initTreeNode(1, new Coordinates(0, 0));
         final List availableMoves = treeNode.getAvailableMoves();
         assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
-        assertThat("Bomber has moves.", availableMoves.size(), is(5));
+        assertThat("Bomber has moves.", availableMoves.size(), is(6));
     }
+
+    @Test
+    public void should_get_6_valid_moves_for_a_bomber_with_bombs_at_1_1() throws Exception {
+        emptyBoard.setCellStatus(1, 0, CellStatus.WALL);
+        emptyBoard.setCellStatus(0, 1, CellStatus.BOX);
+        initTreeNode(1, new Coordinates(1, 1));
+        final List availableMoves = treeNode.getAvailableMoves();
+        assertThat("Bomber has moves.", availableMoves, is(notNullValue()));
+        assertThat("Bomber has moves.", availableMoves.size(), is(6));
+    }
+
+
 }
