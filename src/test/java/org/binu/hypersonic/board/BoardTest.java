@@ -41,14 +41,14 @@ public class BoardTest {
 
     @Test
     public void should_get_2_moves_for_coordinates_0_0() throws Exception {
-        final List<BomberMove> validMoves = board.getValidMoves(new Coordinates(0, 0));
+        final List<Coordinates> validMoves = board.getValidMoves(new Coordinates(0, 0));
         assertThat("There should be 2 valid moves.", validMoves.size(), is(2));
     }
 
     @Test
     public void should_get_1_move_for_coordinates_0_0_with_an_obstacle() throws Exception {
         board.setCellStatus(1, 0, CellStatus.WALL);
-        final List<BomberMove> validMoves = board.getValidMoves(new Coordinates(0,0));
+        final List<Coordinates> validMoves = board.getValidMoves(new Coordinates(0,0));
         assertThat("There should be a valid move.", validMoves.size(), is(1));
     }
 
@@ -56,13 +56,13 @@ public class BoardTest {
     public void should_get_no_move_for_coordinates_0_0_with_obstacles() throws Exception {
         board.setCellStatus(1, 0, CellStatus.BOMB);
         board.setCellStatus(0, 1, CellStatus.BOX);
-        final List<BomberMove> validMoves = board.getValidMoves(new Coordinates(0,0));
+        final List<Coordinates> validMoves = board.getValidMoves(new Coordinates(0,0));
         assertThat("There should be no valid move.", validMoves.size(), is(0));
     }
 
     @Test
     public void should_get_4_moves_for_coordinates_1_1() throws Exception {
-        final List<BomberMove> validMoves = board.getValidMoves(new Coordinates(1,1));
+        final List<Coordinates> validMoves = board.getValidMoves(new Coordinates(1,1));
         assertThat("There should be 4 valid moves.", validMoves.size(), is(4));
     }
 
@@ -71,9 +71,9 @@ public class BoardTest {
         board.setCellStatus(1, 0, CellStatus.WALL);
         board.setCellStatus(0, 1, CellStatus.BOMB);
         board.setCellStatus(2, 1, CellStatus.BOX);
-        final List<BomberMove> validMoves = board.getValidMoves(new Coordinates(1,1));
+        final List<Coordinates> validMoves = board.getValidMoves(new Coordinates(1,1));
         assertThat("There should be a valid move.", validMoves.size(), is(1));
-        assertThat("Valid move contains 1,2", validMoves.get(0).getCoordinates(), is(new Coordinates(1, 2)));
+        assertThat("Valid move contains 1,2", validMoves.get(0), is(new Coordinates(1, 2)));
     }
 
     @Test

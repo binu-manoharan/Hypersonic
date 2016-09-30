@@ -3,8 +3,6 @@ package org.binu.hypersonic.board;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Item;
-import org.binu.hypersonic.move.BomberMove;
-import org.binu.hypersonic.move.MoveXY;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,15 +71,15 @@ public class Board {
         }
     }
 
-    public List<BomberMove> getValidMoves(Coordinates coordinates) {
-        final ArrayList<BomberMove> bomberMoves = new ArrayList<>();
+    public ArrayList<Coordinates> getValidMoves(Coordinates coordinates) {
+        final ArrayList<Coordinates> validMoves = new ArrayList<>();
         final List<Coordinates> coordinatesAround = coordinates.getCoordinatesAround();
         for (Coordinates possibleCoordinateToMove : coordinatesAround) {
             if(coordinateIsMovable(possibleCoordinateToMove)) {
-                bomberMoves.add(new MoveXY(possibleCoordinateToMove));
+                validMoves.add(possibleCoordinateToMove);
             }
         }
-        return bomberMoves;
+        return validMoves;
     }
 
     private Cell getCell(Coordinates coordinates) {

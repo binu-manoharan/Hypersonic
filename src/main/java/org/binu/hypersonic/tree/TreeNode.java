@@ -3,7 +3,9 @@ package org.binu.hypersonic.tree;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.entity.Bomber;
+import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
+import org.binu.hypersonic.move.MoveXY;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,16 @@ public class TreeNode {
     public List<BomberMove> getAvailableMoves() {
         final ArrayList<BomberMove> moves = new ArrayList<>();
         final Coordinates bomberCoordinates = bomber.getCoordinates();
-        board.getValidMoves(bomberCoordinates);
+        final ArrayList<Coordinates> validMoveCoordinates = board.getValidMoves(bomberCoordinates);
+
+        moves.add(new MoveXY(bomberCoordinates));
+        for (Coordinates validMoveCoordinate : validMoveCoordinates) {
+            moves.add(new MoveXY(validMoveCoordinate));
+            if (bomber.canPlaceBombs()) {
+                moves.add(new BombXY(validMoveCoordinate));
+            }
+        }
+
         return moves;
     }
 }

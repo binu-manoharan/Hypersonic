@@ -10,7 +10,7 @@ public class Bomber extends Entity {
         super(ownerId, currentLocation, param1, param2);
     }
 
-    int getNumberOfBombsPlacable() {
-        return param1;
+    public boolean canPlaceBombs() {
+        return param1 > 0;
     }
 }
