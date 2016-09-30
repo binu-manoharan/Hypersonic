@@ -37,7 +37,7 @@ public class MadBomberTest {
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), EMPTY_LIST, EMPTY_LIST);
         final BomberMove bomberMove = madBomber.calculateNextMove();
         assertThat("Bomber move is not null", bomberMove.render(), is(not(nullValue())));
-        final Coordinates currentLocation = bomber.getCurrentLocation();
+        final Coordinates currentLocation = bomber.getCoordinates();
         final String expectedMoveString = "MOVE " + currentLocation.x + " " + currentLocation.y;
         assertThat("Bomber move is to move to current location", bomberMove.render(), is(expectedMoveString));
     }

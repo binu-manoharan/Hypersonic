@@ -8,13 +8,13 @@ import org.binu.hypersonic.Coordinates;
  */
 public abstract class Entity {
     private int ownerId;
-    private Coordinates currentLocation;
+    private Coordinates coordinates;
     protected int param1;
     protected int param2;
 
-    public Entity(int ownerId, Coordinates currentLocation, int param1, int param2) {
+    public Entity(int ownerId, Coordinates coordinates, int param1, int param2) {
         this.ownerId = ownerId;
-        this.currentLocation = currentLocation;
+        this.coordinates = coordinates;
         this.param1 = param1;
         this.param2 = param2;
     }
@@ -32,8 +32,8 @@ public abstract class Entity {
         }
     }
 
-    public Coordinates getCurrentLocation() {
-        return currentLocation;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
     public int getRange() {

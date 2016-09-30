@@ -8,6 +8,7 @@ import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
 import org.binu.hypersonic.pathing.PathHelper;
+import org.binu.hypersonic.tree.SimpleTree;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +28,7 @@ public class MadBomber {
     private final List<Bomb> bombs;
     private final List<Item> items;
     private HotSpotProvider hotSpotProvider;
+    private SimpleTree simpleTree;
 
     public MadBomber(Bomber myBomber, Board board, List<Bomber> bombers, List<Bomb> bombs, List<Item> items) {
         this.myBomber = myBomber;
@@ -35,12 +37,22 @@ public class MadBomber {
         this.bombs = bombs;
         this.items = items;
         pathHelper = new PathHelper();
+        simpleTree = new SimpleTree();
     }
 
     public BomberMove calculateNextMove() {
         hotSpotProvider = new HotSpotProvider(board);
         final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(myBomber.getRange());
         final List<HotSpot> reachableHotSpots = getReachableHotSpots(allHotSpots);
+        /**
+         * Info for tree
+         * board - heat level
+         * Reachable hot spots
+         * Item spots on board - passed as list
+         * Item spots inside box - cellItem & cell status combination
+         * my bomber - x, y, range and number of bombs
+         */
+        simpleTree.makeTree(board, myBomber, bombs, items);
         return getBestReachableMove(reachableHotSpots);
     }
 
@@ -48,19 +60,19 @@ public class MadBomber {
         if (reachableHotSpots.size() > 0) {
             Collections.sort(reachableHotSpots);
             final Coordinates firstCoordinate = reachableHotSpots.get(0).getCoordinates();
-            final Coordinates myCurrentLocation = myBomber.getCurrentLocation();
+            final Coordinates myCurrentLocation = myBomber.getCoordinates();
             if (myCurrentLocation.equals(firstCoordinate)) {
                 return new BombXY(firstCoordinate);
             }
             return new MoveXY(firstCoordinate);
         }
-        return new MoveXY(myBomber.getCurrentLocation());
+        return new MoveXY(myBomber.getCoordinates());
     }
 
     private List<HotSpot> getReachableHotSpots(List<HotSpot> allHotSpots) {
         final List<HotSpot> reachableHotSpots = new ArrayList<>();
         for (HotSpot hotSpot : allHotSpots) {
-            final int distanceToHotSpot = pathHelper.findShortestDistance(board, myBomber.getCurrentLocation(), hotSpot.getCoordinates());
+            final int distanceToHotSpot = pathHelper.findShortestDistance(board, myBomber.getCoordinates(), hotSpot.getCoordinates());
             if (distanceToHotSpot > -1) {
                 reachableHotSpots.add(hotSpot);
             }

@@ -3,8 +3,11 @@ package org.binu.hypersonic.board;
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Item;
+import org.binu.hypersonic.move.BomberMove;
+import org.binu.hypersonic.move.MoveXY;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Board containing the game grid and all cells
@@ -54,7 +57,7 @@ public class Board {
 
     public void addBombs(ArrayList<Bomb> bombs) {
         for (Bomb bomb : bombs) {
-            final Coordinates currentLocation = bomb.getCurrentLocation();
+            final Coordinates currentLocation = bomb.getCoordinates();
             cells[currentLocation.y][currentLocation.x].setCellStatus(CellStatus.BOMB);
         }
     }
@@ -65,8 +68,27 @@ public class Board {
      */
     public void addItems(ArrayList<Item> items) {
         for (Item item : items) {
-            final Coordinates currentLocation = item.getCurrentLocation();
+            final Coordinates currentLocation = item.getCoordinates();
             cells[currentLocation.y][currentLocation.x].setCellItem(item.getItemType());
         }
+    }
+
+    public List<BomberMove> getValidMoves(Coordinates coordinates) {
+        final ArrayList<BomberMove> bomberMoves = new ArrayList<>();
+        final List<Coordinates> coordinatesAround = coordinates.getCoordinatesAround();
+        for (Coordinates possibleCoordinateToMove : coordinatesAround) {
+            if(coordinateIsMovable(possibleCoordinateToMove)) {
+                bomberMoves.add(new MoveXY(possibleCoordinateToMove));
+            }
+        }
+        return bomberMoves;
+    }
+
+    private Cell getCell(Coordinates coordinates) {
+        return cells[coordinates.y][coordinates.x];
+    }
+
+    public boolean coordinateIsMovable(Coordinates coordinates) {
+        return getCell(coordinates).getCellStatus() == CellStatus.EMPTY;
     }
 }

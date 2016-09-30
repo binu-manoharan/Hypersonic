@@ -13,6 +13,11 @@ public class MoveXY implements BomberMove {
     }
 
     @Override
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    @Override
     public String render() {
         return "MOVE " + coordinates.x + " " + coordinates.y;
     }
