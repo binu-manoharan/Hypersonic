@@ -28,7 +28,7 @@ public class HotSpotProvider {
                 cells[y][x].setNumberOfBoxesHit(numberOfBoxesHit);
                 if (numberOfBoxesHit > 0) {
                     allHotSpots.add(new HotSpot(x, y, numberOfBoxesHit));
-                    System.err.println("Spot: [" + x + ", " + y + "] = " + numberOfBoxesHit);
+//                    System.err.println("Spot: [" + x + ", " + y + "] = " + numberOfBoxesHit);
                 }
             }
         }

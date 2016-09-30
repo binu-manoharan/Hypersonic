@@ -29,6 +29,7 @@ public class SimpleTree {
 
     public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items) {
         board.addBombs(bombs);
+        board.calculateHeat();
         TreeNode rootNode = new TreeNode(board, myBomber);
 
         final long startTime = new Date().getTime();
@@ -37,7 +38,18 @@ public class SimpleTree {
             playOut(new Board(board), new Bomber(myBomber), rootNode, 0);
         }
         System.err.println("Number of simulations: " + count);
-        return rootNode;
+        double lowestLossRatio = 100;
+        int lowestLossIndex = 0;
+        final List<TreeNode> children = rootNode.getChildren();
+        for (TreeNode treeNode : children) {
+            final double nodeLossRatio = ((double) treeNode.getLosses()) / treeNode.getNumberOfVisits();
+            if (nodeLossRatio < lowestLossRatio) {
+                lowestLossRatio = nodeLossRatio;
+                lowestLossIndex = children.indexOf(treeNode);
+            }
+            System.err.println("Children :" + treeNode.getLosses() + "/" + treeNode.getNumberOfVisits());
+        }
+        return children.get(lowestLossIndex);
     }
 
     private void playOut(Board board, Bomber bomber, TreeNode treeNode, int depth) {
@@ -53,7 +65,7 @@ public class SimpleTree {
         board.calculateHeat();
         final Cell bomberCell = board.getCell(bomberCoordinates);
         if (bomberCell.getHeat() == 0) {
-            //TODO propagate loss
+            propagateLoss(treeNode);
             return;
         }
 
@@ -62,13 +74,25 @@ public class SimpleTree {
         final int randomIndex = random.nextInt(numberOfAvailableMoves);
 
         final BomberMove bomberMove = availableMoves.get(randomIndex);
-        final TreeNode childNode = new TreeNode(board, bomber);
+        TreeNode childNode = new TreeNode(board, bomber);
         childNode.setBomberMove(bomberMove);
         final List<TreeNode> children = treeNode.getChildren();
         if (!children.contains(childNode)) {
             childNode.applyMove(bomberMove);
             treeNode.addChild(childNode);
+        } else {
+            final int childIndex = children.indexOf(childNode);
+            childNode = children.get(childIndex);
         }
+
+        childNode.addVisit();
         playOut(board, bomber, childNode, ++depth);
+    }
+
+    private void propagateLoss(TreeNode treeNode) {
+        while (treeNode.getParent() != null) {
+            treeNode.addLoss();
+            treeNode = treeNode.getParent();
+        }
     }
 }

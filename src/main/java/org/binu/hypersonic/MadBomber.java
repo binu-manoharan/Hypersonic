@@ -9,6 +9,7 @@ import org.binu.hypersonic.move.BomberMove;
 import org.binu.hypersonic.move.MoveXY;
 import org.binu.hypersonic.pathing.PathHelper;
 import org.binu.hypersonic.tree.SimpleTree;
+import org.binu.hypersonic.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,8 +53,9 @@ public class MadBomber {
          * Item spots inside box - cellItem & cell status combination
          * my bomber - x, y, range and number of bombs
          */
-        simpleTree.makeTree(board, myBomber, bombs, items);
-        return getBestReachableMove(reachableHotSpots);
+        final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items);
+//        return getBestReachableMove(reachableHotSpots);
+        return bestChild.getBomberMove();
     }
 
     private BomberMove getBestReachableMove(List<HotSpot> reachableHotSpots) {

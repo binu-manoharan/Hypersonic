@@ -74,7 +74,6 @@ public class HeatApplicator {
         }
 
         if (cellStatus == CellStatus.BOMB) {
-            System.err.println("Bomb coordinates: [" + bombCoordinates.x + "," + bombCoordinates.y + "]" );
             final int bombIndex = bombs.indexOf(new Bomb(-1, bombCoordinates, 0, 0));
             final Bomb foundBomb = bombs.get(bombIndex);
 

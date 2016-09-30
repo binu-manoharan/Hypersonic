@@ -93,4 +93,28 @@ public class TreeNode {
     public void setBomberMove(BomberMove bomberMove) {
         this.bomberMove = bomberMove;
     }
+
+    public void addVisit() {
+        numberOfVisits++;
+    }
+
+    public void addLoss() {
+        losses++;
+    }
+
+    public TreeNode getParent() {
+        return parent;
+    }
+
+    public int getNumberOfVisits() {
+        return numberOfVisits;
+    }
+
+    public int getLosses() {
+        return losses;
+    }
+
+    public BomberMove getBomberMove() {
+        return bomberMove;
+    }
 }
