@@ -6,15 +6,8 @@ import org.binu.hypersonic.Coordinates;
  *
  */
 public class BombXY extends AbstractBomberMove {
-    private final Coordinates coordinates;
-
     public BombXY(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    @Override
-    public Coordinates getCoordinates() {
-        return coordinates;
+        super(coordinates);
     }
 
     @Override
