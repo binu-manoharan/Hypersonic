@@ -22,13 +22,19 @@ public class TreeNode {
     private int wins;
     private int losses;
     private int boxes;
+    private BomberMove bomberMove;
 
     private List<TreeNode> children;
+    private TreeNode parent;
 
     public TreeNode(Board board, Bomber bomber) {
         this.board = board;
         this.bomber = bomber;
         children = new ArrayList<>();
+    }
+
+    public List<TreeNode> getChildren() {
+        return children;
     }
 
     public List<BomberMove> getAvailableMoves() {
@@ -59,5 +65,33 @@ public class TreeNode {
 
         final Coordinates coordinates = bomberMove.getCoordinates();
         bomber.setCoordinates(coordinates);
+    }
+
+    public void addChild(TreeNode childNode) {
+        children.add(childNode);
+        childNode.setParent(this);
+    }
+
+    public void setParent(TreeNode parent) {
+        this.parent = parent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TreeNode)) return false;
+
+        TreeNode treeNode = (TreeNode) o;
+
+        return bomberMove != null ? bomberMove.equals(treeNode.bomberMove) : treeNode.bomberMove == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return bomberMove != null ? bomberMove.hashCode() : 0;
+    }
+
+    public void setBomberMove(BomberMove bomberMove) {
+        this.bomberMove = bomberMove;
     }
 }
