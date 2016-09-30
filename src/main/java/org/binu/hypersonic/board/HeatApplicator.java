@@ -17,6 +17,10 @@ public class HeatApplicator {
         bombs = new ArrayList<>();
     }
 
+    public HeatApplicator(HeatApplicator heatApplicator) {
+        bombs.addAll(heatApplicator.getBombs());
+    }
+
     public void applyHeat(Board board) {
         this.board = board;
         cells = board.getCells();
@@ -25,6 +29,11 @@ public class HeatApplicator {
         }
     }
 
+    /**
+     * Applies heat for a bomb.
+     * To be called with caution. It doesn't initialise the board.
+     * @param bomb bomb for which board heat needs to be calculated.
+     */
     public void applyHeat(Bomb bomb) {
         final int heat = bomb.getHeat();
         final int range = bomb.getRange();
@@ -100,5 +109,9 @@ public class HeatApplicator {
 
     public void addBomb(Bomb bomb) {
         bombs.add(bomb);
+    }
+
+    public ArrayList<Bomb> getBombs() {
+        return bombs;
     }
 }

@@ -30,7 +30,7 @@ public class Board {
                 this.cells[y][x] = new Cell(cells[y][x]);
             }
         }
-        heatApplicator = new HeatApplicator();
+        heatApplicator = new HeatApplicator(board.getHeatApplicator());
     }
 
     void setRow(int rowIndex, Cell[] rowCells) {
@@ -115,5 +115,9 @@ public class Board {
 
         final Coordinates bombCoordinates = bomb.getCoordinates();
         cells[bombCoordinates.y][bombCoordinates.x].setCellStatus(CellStatus.BOMB);
+    }
+
+    public HeatApplicator getHeatApplicator() {
+        return heatApplicator;
     }
 }
