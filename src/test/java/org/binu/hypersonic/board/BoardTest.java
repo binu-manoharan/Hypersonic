@@ -1,7 +1,7 @@
 package org.binu.hypersonic.board;
 
 import org.binu.hypersonic.Coordinates;
-import org.binu.hypersonic.move.BomberMove;
+import org.binu.hypersonic.entity.EntityHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,10 +18,12 @@ public class BoardTest {
 
     private Board board;
     private Cell[] rowCells;
+    private EntityHelper entityHelper;
 
     @Before
     public void setUp() throws Exception {
         board = getEmptyBoard();
+        entityHelper = new EntityHelper();
         rowCells = new Cell[Board.BOARD_WIDTH];
     }
 
@@ -102,6 +104,4 @@ public class BoardTest {
         final boolean isMovable = board.coordinateIsMovable(new Coordinates(0, 0));
         assertThat("0, 0 is not movable.", isMovable, is(false));
     }
-
-
 }

@@ -15,9 +15,11 @@ public class Board {
     public static final int BOARD_HEIGHT = 11;
 
     private final Cell[][] cells;
+    private HeatApplicator heatApplicator;
 
     public Board() {
         cells = new Cell[BOARD_HEIGHT][BOARD_WIDTH];
+        heatApplicator = new HeatApplicator();
     }
 
     void setRow(int rowIndex, Cell[] rowCells) {
@@ -54,6 +56,8 @@ public class Board {
     }
 
     public void addBombs(ArrayList<Bomb> bombs) {
+        heatApplicator.setBombs(bombs);
+
         for (Bomb bomb : bombs) {
             final Coordinates currentLocation = bomb.getCoordinates();
             cells[currentLocation.y][currentLocation.x].setCellStatus(CellStatus.BOMB);
@@ -62,6 +66,7 @@ public class Board {
 
     /**
      * This is for the items outside the box
+     *
      * @param items list of items dropped on the floor
      */
     public void addItems(ArrayList<Item> items) {
@@ -75,7 +80,7 @@ public class Board {
         final ArrayList<Coordinates> validMoves = new ArrayList<>();
         final List<Coordinates> coordinatesAround = coordinates.getCoordinatesAround();
         for (Coordinates possibleCoordinateToMove : coordinatesAround) {
-            if(coordinateIsMovable(possibleCoordinateToMove)) {
+            if (coordinateIsMovable(possibleCoordinateToMove)) {
                 validMoves.add(possibleCoordinateToMove);
             }
         }
@@ -88,5 +93,16 @@ public class Board {
 
     public boolean coordinateIsMovable(Coordinates coordinates) {
         return getCell(coordinates).getCellStatus() == CellStatus.EMPTY;
+    }
+
+    public void calculateHeat() {
+        heatApplicator.applyHeat(this);
+    }
+
+    public void addBomb(Bomb bomb) {
+        heatApplicator.addBomb(bomb);
+
+        final Coordinates bombCoordinates = bomb.getCoordinates();
+        cells[bombCoordinates.y][bombCoordinates.x].setCellStatus(CellStatus.BOMB);
     }
 }

@@ -7,6 +7,7 @@ public class Cell {
     private CellItem cellItem;
     private CellStatus cellStatus;
     private int numberOfBoxesHit;
+    private int heat;
 
     public Cell(CellStatus cellStatus) {
         this.cellStatus = cellStatus;
@@ -49,5 +50,13 @@ public class Cell {
 
     public void setCellItem(CellItem cellItem) {
         this.cellItem = cellItem;
+    }
+
+    public int getHeat() {
+        return heat;
+    }
+
+    public void setHeat(int heat) {
+        this.heat = heat;
     }
 }

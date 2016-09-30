@@ -39,7 +39,7 @@ public class Coordinates {
     public List<Coordinates> getCoordinatesAround() {
         final ArrayList<Coordinates> coordinatesAround = new ArrayList<>();
 
-        if (!isValidCoordinate(this.x, this.y)) {
+        if (!isValidCoordinate()) {
             return coordinatesAround;
         }
 
@@ -55,15 +55,16 @@ public class Coordinates {
 
                 final int xNew = this.x + x;
                 final int yNew = this.y + y;
-                if (isValidCoordinate(xNew, yNew)) {
-                    coordinatesAround.add(new Coordinates(xNew, yNew));
+                final Coordinates newCoordinates = new Coordinates(xNew, yNew);
+                if (newCoordinates.isValidCoordinate()) {
+                    coordinatesAround.add(newCoordinates);
                 }
             }
         }
         return coordinatesAround;
     }
 
-    private boolean isValidCoordinate(int x, int y) {
+    public boolean isValidCoordinate() {
         return x >= 0 && x < Board.BOARD_WIDTH && y >= 0 && y < Board.BOARD_HEIGHT;
     }
 }
