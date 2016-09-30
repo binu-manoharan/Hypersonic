@@ -4,6 +4,7 @@ import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.entity.Bomb;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper to apply heat on the board
@@ -11,13 +12,14 @@ import java.util.ArrayList;
 public class HeatApplicator {
     private Board board;
     private Cell[][] cells;
-    private ArrayList<Bomb> bombs;
+    private List<Bomb> bombs;
 
     public HeatApplicator() {
         bombs = new ArrayList<>();
     }
 
     public HeatApplicator(HeatApplicator heatApplicator) {
+        bombs = new ArrayList<>();
         bombs.addAll(heatApplicator.getBombs());
     }
 
@@ -103,7 +105,7 @@ public class HeatApplicator {
         }
     }
 
-    public void setBombs(ArrayList<Bomb> bombs) {
+    public void setBombs(List<Bomb> bombs) {
         this.bombs = bombs;
     }
 
@@ -111,7 +113,7 @@ public class HeatApplicator {
         bombs.add(bomb);
     }
 
-    public ArrayList<Bomb> getBombs() {
+    public List<Bomb> getBombs() {
         return bombs;
     }
 }

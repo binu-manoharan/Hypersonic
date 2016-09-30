@@ -35,7 +35,7 @@ public class PathHelper {
         final PathNode destinationPathNode = pathNodes[destination.y][destination.x];
 
         if (destinationPathNode.equals(startingPathNode)) {
-            return Collections.EMPTY_LIST;
+            return new ArrayList<>();
         }
 
         startingPathNode.setCost(0);

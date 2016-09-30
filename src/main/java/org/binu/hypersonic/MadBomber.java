@@ -24,13 +24,13 @@ public class MadBomber {
     private final Bomber myBomber;
     private final PathHelper pathHelper;
     private Board board;
-    private final ArrayList<Bomber> bombers;
-    private final ArrayList<Bomb> bombs;
-    private final ArrayList<Item> items;
+    private final List<Bomber> bombers;
+    private final List<Bomb> bombs;
+    private final List<Item> items;
     private HotSpotProvider hotSpotProvider;
     private SimpleTree simpleTree;
 
-    public MadBomber(Bomber myBomber, Board board, ArrayList<Bomber> bombers, ArrayList<Bomb> bombs, ArrayList<Item> items) {
+    public MadBomber(Bomber myBomber, Board board, List<Bomber> bombers, List<Bomb> bombs, List<Item> items) {
         this.myBomber = myBomber;
         this.board = board;
         this.bombers = bombers;

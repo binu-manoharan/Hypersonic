@@ -6,7 +6,7 @@ import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.EntityHelper;
 import org.junit.Test;
 
-import java.util.Collections;
+import java.util.ArrayList;
 
 /**
  * Test for {@link SimpleTree}
@@ -19,7 +19,7 @@ public class SimpleTreeTest {
     public void should_create_a_single_iteration() throws Exception {
         simpleTree = new SimpleTree();
         final Bomber bomber = (Bomber) new EntityHelper().createEntity(0, 0, new Coordinates(0, 0), 1, 3);
-        final TreeNode treeNode = simpleTree.makeTree(TestHelper.getEmptyBoard(), bomber, Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        final TreeNode treeNode = simpleTree.makeTree(TestHelper.getEmptyBoard(), bomber, new ArrayList<>(), new ArrayList<>());
 
     }
 }

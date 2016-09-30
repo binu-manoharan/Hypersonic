@@ -66,7 +66,7 @@ public class Board {
         return cells[coordinates.y][coordinates.x].getCellStatus();
     }
 
-    public void addBombs(ArrayList<Bomb> bombs) {
+    public void addBombs(List<Bomb> bombs) {
         heatApplicator.setBombs(bombs);
 
         for (Bomb bomb : bombs) {
