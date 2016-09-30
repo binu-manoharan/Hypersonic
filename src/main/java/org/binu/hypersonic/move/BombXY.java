@@ -5,7 +5,7 @@ import org.binu.hypersonic.Coordinates;
 /**
  *
  */
-public class BombXY implements BomberMove {
+public class BombXY extends AbstractBomberMove {
     private final Coordinates coordinates;
 
     public BombXY(Coordinates coordinates) {

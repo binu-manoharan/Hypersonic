@@ -5,7 +5,7 @@ import org.binu.hypersonic.Coordinates;
 /**
  * Move to coordinates command for bomber
  */
-public class MoveXY implements BomberMove {
+public class MoveXY extends AbstractBomberMove {
     private final Coordinates coordinates;
 
     public MoveXY(Coordinates coordinates) {
