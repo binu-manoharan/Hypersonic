@@ -10,6 +10,13 @@ public class Bomber extends Entity {
         super(ownerId, currentLocation, param1, param2);
     }
 
+    public Bomber(Bomber bomber) {
+        super(bomber.getOwnerId(), bomber.getCoordinates(), bomber.getNumberOfBombs(), bomber.getRange());
+    }
+
+    public int getNumberOfBombs() {
+        return param1;
+    }
     public boolean canPlaceBombs() {
         return param1 > 0;
     }

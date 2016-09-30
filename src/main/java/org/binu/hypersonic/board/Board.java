@@ -22,6 +22,17 @@ public class Board {
         heatApplicator = new HeatApplicator();
     }
 
+    public Board(Board board) {
+        final Cell[][] cells = board.getCells();
+        this.cells = new Cell[BOARD_HEIGHT][BOARD_WIDTH];
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                this.cells[y][x] = new Cell(cells[y][x]);
+            }
+        }
+        heatApplicator = new HeatApplicator();
+    }
+
     void setRow(int rowIndex, Cell[] rowCells) {
         this.cells[rowIndex] = rowCells;
     }

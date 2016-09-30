@@ -20,6 +20,12 @@ public class Cell {
         heat = -1;
     }
 
+    public Cell(Cell cell) {
+        this.cellItem = cell.cellItem;
+        this.cellStatus = cell.cellStatus;
+        this.heat = cell.heat;
+        this.numberOfBoxesHit = cell.numberOfBoxesHit;
+    }
 
     public CellStatus getCellStatus() {
         return cellStatus;
