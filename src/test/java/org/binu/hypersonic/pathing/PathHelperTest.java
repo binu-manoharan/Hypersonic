@@ -47,7 +47,7 @@ public class PathHelperTest {
         coordinates1 = new Coordinates(0, 0);
         coordinates2 = new Coordinates(2, 0);
         emptyBoard.setCellStatus(1, 0, CellStatus.WALL);
-        emptyBoard.printBoard();
+        emptyBoard.boardString();
         final int shortestDistance = pathHelper.findShortestDistance(emptyBoard, coordinates1, coordinates2);
         assertThat("Shortest distance to be 4 due to obstacle.", shortestDistance, is(4));
     }
@@ -56,7 +56,7 @@ public class PathHelperTest {
     public void should_find_the_path_to_be_22_on_an_empty_board() throws Exception {
         coordinates1 = new Coordinates(0, 0);
         coordinates2 = new Coordinates(12, 10);
-        emptyBoard.printBoard();
+        emptyBoard.boardString();
         final int shortestDistance = pathHelper.findShortestDistance(emptyBoard, coordinates1, coordinates2);
         assertThat("Shortest distance to be 22.", shortestDistance, is(22));
     }
@@ -76,7 +76,7 @@ public class PathHelperTest {
         emptyBoard.setCellStatus(1, 8, CellStatus.WALL);
         emptyBoard.setCellStatus(1, 9, CellStatus.WALL);
 
-        emptyBoard.printBoard();
+        emptyBoard.boardString();
         final int shortestDistance = pathHelper.findShortestDistance(emptyBoard, coordinates1, coordinates2);
         assertThat("Shortest distance to be 22 due to obstacle.", shortestDistance, is(22));
     }
@@ -97,7 +97,7 @@ public class PathHelperTest {
         emptyBoard.setCellStatus(1, 9, CellStatus.WALL);
         emptyBoard.setCellStatus(1, 10, CellStatus.WALL);
 
-        emptyBoard.printBoard();
+        emptyBoard.boardString();
         final int shortestDistance = pathHelper.findShortestDistance(emptyBoard, coordinates1, coordinates2);
         assertThat("Shortest distance to be 4 due to obstacle.", shortestDistance, is(-1));
     }

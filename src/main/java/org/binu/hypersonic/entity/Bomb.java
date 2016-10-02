@@ -12,6 +12,10 @@ public class Bomb extends Entity {
         super(ownerId, currentLocation, param1, param2);
     }
 
+    public Bomb(Bomb bomb) {
+        super(bomb.ownerId, new Coordinates(bomb.getCoordinates()), bomb.param1, bomb.param2);
+    }
+
     public int getHeat() {
         return param1;
     }

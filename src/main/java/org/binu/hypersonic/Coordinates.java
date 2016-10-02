@@ -17,6 +17,11 @@ public class Coordinates {
         this.y = y;
     }
 
+    public Coordinates(Coordinates coordinates) {
+        this.x = coordinates.x;
+        this.y = coordinates.y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,5 +71,13 @@ public class Coordinates {
 
     public boolean isValidCoordinate() {
         return x >= 0 && x < Board.BOARD_WIDTH && y >= 0 && y < Board.BOARD_HEIGHT;
+    }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 }

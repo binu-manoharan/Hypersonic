@@ -30,7 +30,7 @@ public class Board {
                 this.cells[y][x] = new Cell(cells[y][x]);
             }
         }
-        heatApplicator = new HeatApplicator(board.getHeatApplicator());
+        heatApplicator = new HeatApplicator(board.getHeatApplicator().getBombs());
     }
 
     void setRow(int rowIndex, Cell[] rowCells) {
@@ -41,6 +41,18 @@ public class Board {
         return cells[rowIndex];
     }
 
+    public String[] boardString() {
+        String[] rows = new String[BOARD_HEIGHT];
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            String row = "";
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                row += cells[y][x].getCellPrint();
+            }
+            rows[y] = row;
+        }
+        return rows;
+    }
+
     public void printBoard() {
         for (int y = 0; y < BOARD_HEIGHT; y++) {
             for (int x = 0; x < BOARD_WIDTH; x++) {
@@ -48,6 +60,27 @@ public class Board {
             }
             System.err.println("");
         }
+    }
+
+    public void printBoardHeat() {
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                System.err.print(cells[y][x].getHeat());
+            }
+            System.err.println("");
+        }
+    }
+
+    public String[] boardHeatString() {
+        String[] rows = new String[BOARD_HEIGHT];
+        for (int y = 0; y < BOARD_HEIGHT; y++) {
+            String row = "";
+            for (int x = 0; x < BOARD_WIDTH; x++) {
+                row += cells[y][x].getHeat();
+            }
+            rows[y] = row;
+        }
+        return rows;
     }
 
     public Cell[][] getCells() {
@@ -67,11 +100,9 @@ public class Board {
     }
 
     public void addBombs(List<Bomb> bombs) {
-        heatApplicator.setBombs(bombs);
-
         for (Bomb bomb : bombs) {
-            final Coordinates currentLocation = bomb.getCoordinates();
-            cells[currentLocation.y][currentLocation.x].setCellStatus(CellStatus.BOMB);
+            final boolean bombAdded = addBomb(bomb);
+            assert bombAdded : "Bomb failed to add!";
         }
     }
 
@@ -115,11 +146,18 @@ public class Board {
         heatApplicator.applyHeat(this);
     }
 
-    public void addBomb(Bomb bomb) {
-        heatApplicator.addBomb(bomb);
+    public boolean addBomb(Bomb bomb) {
+        final List<Bomb> existingBombsList = heatApplicator.getBombs();
+        if (!existingBombsList.contains(bomb)) {
+            heatApplicator.addBomb(bomb);
 
-        final Coordinates bombCoordinates = bomb.getCoordinates();
-        cells[bombCoordinates.y][bombCoordinates.x].setCellStatus(CellStatus.BOMB);
+            final Coordinates bombCoordinates = bomb.getCoordinates();
+            cells[bombCoordinates.y][bombCoordinates.x].setCellStatus(CellStatus.BOMB);
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public HeatApplicator getHeatApplicator() {
@@ -128,6 +166,9 @@ public class Board {
 
     public void tickBombs() {
         heatApplicator.tickBombs();
-        heatApplicator.removeExpiredBombs();
+    }
+
+    public List<Bomb> removeExpiredBombs() {
+        return heatApplicator.removeExpiredBombs();
     }
 }

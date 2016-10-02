@@ -18,9 +18,11 @@ public class HeatApplicator {
         bombs = new ArrayList<>();
     }
 
-    public HeatApplicator(HeatApplicator heatApplicator) {
-        bombs = new ArrayList<>();
-        bombs.addAll(heatApplicator.getBombs());
+    public HeatApplicator(List<Bomb> bombs) {
+        this.bombs = new ArrayList<>();
+        for (Bomb bomb : bombs) {
+            addBomb(new Bomb(bomb));
+        }
     }
 
     public void applyHeat(Board board) {
@@ -31,7 +33,7 @@ public class HeatApplicator {
         }
     }
 
-    public void removeExpiredBombs() {
+    public List<Bomb> removeExpiredBombs() {
         List<Bomb> bombsToRemove = new ArrayList<>();
         for (Bomb bomb : bombs) {
             if(bomb.getHeat() == -1) {
@@ -42,6 +44,7 @@ public class HeatApplicator {
         }
 
         bombs.removeAll(bombsToRemove);
+        return bombsToRemove;
     }
 
     /**
@@ -73,7 +76,8 @@ public class HeatApplicator {
             return;
         }
 
-        if (cellStatus == CellStatus.BOMB) {
+
+        if (cellStatus == CellStatus.BOMB && (xDiff != 0 || yDiff != 0)) {
             final int bombIndex = bombs.indexOf(new Bomb(-1, bombCoordinates, 0, 0));
             final Bomb foundBomb = bombs.get(bombIndex);
 

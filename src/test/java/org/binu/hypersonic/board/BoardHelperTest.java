@@ -1,6 +1,5 @@
 package org.binu.hypersonic.board;
 
-import org.binu.hypersonic.board.BoardHelper;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -90,7 +89,7 @@ public class BoardHelperTest {
                 assertThat("Board cell is empty", cells[y][x].getCellStatus(), is(CellStatus.EMPTY));
             }
         }
-        board.printBoard();
+        board.boardString();
     }
 
     @Test
@@ -111,7 +110,7 @@ public class BoardHelperTest {
             else
                 assertThat("Board is cell is occupied by a box", cells[0][x].getCellStatus(), is(CellStatus.BOX));
         }
-        board.printBoard();
+        board.boardString();
     }
 
     @Test(expected = AssertionError.class)

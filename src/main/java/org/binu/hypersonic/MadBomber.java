@@ -54,17 +54,17 @@ public class MadBomber {
          * my bomber - x, y, range and number of bombs
          */
         final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items);
-//        return getBestReachableMove(reachableHotSpots);
         return bestChild.getBomberMove();
     }
 
     private BomberMove getBestReachableMove(List<HotSpot> reachableHotSpots) {
+        //TODO what?
         if (reachableHotSpots.size() > 0) {
             Collections.sort(reachableHotSpots);
             final Coordinates firstCoordinate = reachableHotSpots.get(0).getCoordinates();
             final Coordinates myCurrentLocation = myBomber.getCoordinates();
             if (myCurrentLocation.equals(firstCoordinate)) {
-                return new BombXY(firstCoordinate);
+                return new BombXY(firstCoordinate, firstCoordinate);
             }
             return new MoveXY(firstCoordinate);
         }

@@ -162,7 +162,7 @@ public class HotSpotProviderTest {
         board.addBombs(bombs);
 
         board.setCellStatus(3, 0, CellStatus.BOX);
-        board.printBoard();
+        board.boardString();
         hotSpotProvider = new HotSpotProvider(board);
         final int boxesHit = hotSpotProvider.numberOfBoxesHit(1, 0, 1, 0, 3);
         assertThat("Should hit no boxes", boxesHit, is(0));

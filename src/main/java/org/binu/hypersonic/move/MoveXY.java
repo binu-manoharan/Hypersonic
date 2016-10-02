@@ -20,4 +20,9 @@ public class MoveXY extends AbstractBomberMove {
     public String render() {
         return "MOVE " + coordinates.x + " " + coordinates.y;
     }
+
+    @Override
+    public String toString() {
+        return render();
+    }
 }

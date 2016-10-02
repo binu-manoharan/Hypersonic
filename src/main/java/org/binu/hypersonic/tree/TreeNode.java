@@ -2,6 +2,7 @@ package org.binu.hypersonic.tree;
 
 import org.binu.hypersonic.Coordinates;
 import org.binu.hypersonic.board.Board;
+import org.binu.hypersonic.board.CellStatus;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.move.AbstractBomberMove;
@@ -17,20 +18,21 @@ import java.util.List;
  */
 public class TreeNode {
     private final Board board;
-    private final Bomber bomber;
     private int numberOfVisits;
     private int wins;
     private int losses;
     private int boxes;
     private BomberMove bomberMove;
+    private Bomber bomber;
+
 
     private List<TreeNode> children;
     private TreeNode parent;
 
     public TreeNode(Board board, Bomber bomber) {
         this.board = board;
-        this.bomber = bomber;
         children = new ArrayList<>();
+        this.bomber = bomber;
     }
 
     public List<TreeNode> getChildren() {
@@ -43,13 +45,13 @@ public class TreeNode {
         final ArrayList<Coordinates> validMoveCoordinates = board.getValidMoves(bomberCoordinates);
 
         moves.add(new MoveXY(bomberCoordinates));
-        if (bomber.canPlaceBombs()) {
-            moves.add(new BombXY(bomberCoordinates));
+        if (bomber.canPlaceBombs() && board.getCellStatus(bomberCoordinates) != CellStatus.BOMB) {
+            moves.add(new BombXY(bomberCoordinates, bomberCoordinates));
         }
         for (Coordinates validMoveCoordinate : validMoveCoordinates) {
             moves.add(new MoveXY(validMoveCoordinate));
             if (bomber.canPlaceBombs()) {
-                moves.add(new BombXY(validMoveCoordinate));
+                moves.add(new BombXY(validMoveCoordinate, bomberCoordinates));
             }
         }
 
@@ -59,11 +61,13 @@ public class TreeNode {
     public void applyMove(BomberMove bomberMove) {
         if (bomberMove.getMoveCode() == AbstractBomberMove.BOMB_CODE) {
             final Bomb bomb = new Bomb(bomber.getOwnerId(), bomber.getCoordinates(), Bomb.BOMB_HEAT, bomber.getRange());
-            board.addBomb(bomb);
+            final boolean placedBomb = board.addBomb(bomb);
+            assert placedBomb : "Bomb already exists?!?!?" + bomber.getCoordinates();
+            bomber.placedABomb();
         }
 
         final Coordinates coordinates = bomberMove.getCoordinates();
-        bomber.setCoordinates(coordinates);
+        this.bomber.setCoordinates(coordinates);
     }
 
     public void addChild(TreeNode childNode) {
@@ -82,12 +86,13 @@ public class TreeNode {
 
         TreeNode treeNode = (TreeNode) o;
 
-        return bomberMove != null ? bomberMove.equals(treeNode.bomberMove) : treeNode.bomberMove == null;
+        assert bomberMove != null;
+        return bomberMove.equals(treeNode.bomberMove);
     }
 
     @Override
     public int hashCode() {
-        return bomberMove != null ? bomberMove.hashCode() : 0;
+        return bomberMove.toString() != null ? bomberMove.toString().hashCode() : 0;
     }
 
     public void setBomberMove(BomberMove bomberMove) {
@@ -116,5 +121,13 @@ public class TreeNode {
 
     public BomberMove getBomberMove() {
         return bomberMove;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Bomber getBomber() {
+        return bomber;
     }
 }

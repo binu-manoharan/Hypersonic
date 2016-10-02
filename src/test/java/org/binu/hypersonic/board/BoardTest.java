@@ -136,6 +136,7 @@ public class BoardTest {
         board.calculateHeat();
         board.tickBombs();
         board.calculateHeat();
+        board.removeExpiredBombs();
         final Cell cell = board.getCell(0, 0);
         assertThat("0, 0 heat.", cell.getHeat(), is(HEAT_0 - 1));
         assertThat("Bomb has been removed.", board.getHeatApplicator().getBombs().size(), is(0));

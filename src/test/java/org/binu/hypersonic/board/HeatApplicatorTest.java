@@ -85,12 +85,14 @@ public class HeatApplicatorTest {
         assertTickDeduction(1, 0);
         board.tickBombs();
         board.calculateHeat();
+        board.removeExpiredBombs();
 
         assertCellHeat(0, 0, 0);
         assertCellHeat(1, 0, 0);
         assertCellHeat(2, 0, 0);
         assertCellHeat(0, 1, -1);
         assertCellHeat(0, 2, -1);
+        board.removeExpiredBombs();
         assertThat("One bomb has been removed.", board.getHeatApplicator().getBombs().size(), is(1));
 
         board.tickBombs();
@@ -101,6 +103,7 @@ public class HeatApplicatorTest {
         assertCellHeat(2, 0, -1);
         assertCellHeat(0, 1, -1);
         assertCellHeat(0, 2, -1);
+        board.removeExpiredBombs();
         assertThat("Both bombs have been removed.", board.getHeatApplicator().getBombs().size(), is(0));
     }
 

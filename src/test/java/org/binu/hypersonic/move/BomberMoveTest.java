@@ -20,7 +20,7 @@ public class BomberMoveTest {
 
     @Test
     public void should_generate_0_0_bomb_message() throws Exception {
-        final BomberMove bombXY = new BombXY(new Coordinates(0,0));
+        final BomberMove bombXY = new BombXY(new Coordinates(0,0), new Coordinates(0,0));
         final String moveMessage = bombXY.render();
 
         assertThat("Should generate Bomb [0,0] message", moveMessage, is("BOMB 0 0"));

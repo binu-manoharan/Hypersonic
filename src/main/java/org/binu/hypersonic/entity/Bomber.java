@@ -24,4 +24,12 @@ public class Bomber extends Entity {
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+
+    public void placedABomb() {
+        param1--;
+    }
+
+    public void bombWentOffInGrid() {
+        param1++;
+    }
 }

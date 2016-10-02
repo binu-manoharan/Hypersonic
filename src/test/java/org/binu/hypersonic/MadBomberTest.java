@@ -8,8 +8,6 @@ import org.binu.hypersonic.move.BomberMove;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-
 import static java.util.Collections.*;
 import static java.util.Collections.singletonList;
 import static org.binu.hypersonic.TestHelper.getEmptyBoard;
@@ -54,6 +52,9 @@ public class MadBomberTest {
     @Test
     public void should_try_to_bomb_the_box() throws Exception {
         emptyBoard.setCellStatus(0, 0, CellStatus.BOX);
+        emptyBoard.setCellStatus(2, 0, CellStatus.WALL);
+        emptyBoard.setCellStatus(2, 1, CellStatus.WALL);
+        emptyBoard.setCellStatus(1, 1, CellStatus.WALL);
         bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(1, 0), 1, 3);
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), emptyList(), emptyList());
         final BomberMove bomberMove = madBomber.calculateNextMove();
@@ -67,7 +68,7 @@ public class MadBomberTest {
         emptyBoard.setCellStatus(2, 0, CellStatus.BOX);
         emptyBoard.setCellStatus(0, 2, CellStatus.WALL);
         emptyBoard.setCellStatus(4, 0, CellStatus.BOX);
-        emptyBoard.printBoard();
+        emptyBoard.boardString();
 
         bomber = (Bomber) entityHelper.createEntity(0, 0, new Coordinates(1, 0), 1, 3);
         MadBomber madBomber = new MadBomber(bomber, emptyBoard, singletonList(bomber), emptyList(), emptyList());
