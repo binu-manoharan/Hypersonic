@@ -45,7 +45,6 @@ public class SimpleTree {
         final long startTime = new Date().getTime();
 
         while (new Date().getTime() - startTime < TIME_LIMIT_IN_MS) {
-            this.bombs = new ArrayList<>();
             playOut(board, rootNode, 0);
         }
 
@@ -117,10 +116,9 @@ public class SimpleTree {
 
         if (depth > MAX_DEPTH) {
             count++;
+            propagateWin(treeNode);
             return;
         }
-
-        treeNode.addVisit();
 
         final List<BomberMove> availableMoves = treeNode.getAvailableMoves();
         final BomberMove bomberMove = selectMove(availableMoves, treeNode.getBomber().getCoordinates());
@@ -135,8 +133,7 @@ public class SimpleTree {
             childNode = new TreeNode(board1, bomber1);
             childNode.setBomberMove(bomberMove);
             treeNode.addChild(childNode);
-            final Bomb bomb = childNode.applyMove(bomberMove);
-            bombs.add(bomb);
+            childNode.applyMove(bomberMove);
             board1.tickBombs();
             board1.calculateHeat();
 //            System.err.print("  | N");
@@ -155,8 +152,8 @@ public class SimpleTree {
             return;
         }
 
-        final boolean bombWentOff = removeExpiredBombsAndResetBombCount(board1, childNode.getBomber());
-        if (bombWentOff) {
+        final boolean bombWentOffWithBox = removeExpiredBombsAndResetBombCount(board1, childNode.getBomber());
+        if (bombWentOffWithBox) {
             propagateWin(childNode);
             return;
         }
@@ -187,6 +184,7 @@ public class SimpleTree {
         TreeNode tempNode = treeNode;
         while (tempNode != null) {
             tempNode.addWin();
+            tempNode.addVisit();
             tempNode = tempNode.getParent();
         }
     }
@@ -196,8 +194,7 @@ public class SimpleTree {
         for (Bomb expiredBomb : expiredBombs) {
             if (expiredBomb.getOwnerId() == bomber.getOwnerId()) {
                 bomber.bombWentOffInGrid();
-                return true;
-//                return bombs.contains(expiredBomb);
+                return reachableHotSpots.contains(expiredBomb.getCoordinates());
 
             }
         }
@@ -208,6 +205,7 @@ public class SimpleTree {
         TreeNode tempNode = treeNode;
         while (tempNode != null) {
             tempNode.addLoss();
+            tempNode.addVisit();
             tempNode = tempNode.getParent();
         }
     }
