@@ -53,7 +53,7 @@ public class MadBomber {
          * Item spots inside box - cellItem & cell status combination
          * my bomber - x, y, range and number of bombs
          */
-        final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items);
+        final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items, reachableHotSpots);
         return bestChild.getBomberMove();
     }
 

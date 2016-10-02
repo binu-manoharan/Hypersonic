@@ -1,6 +1,7 @@
 package org.binu.hypersonic.tree;
 
 import org.binu.hypersonic.Coordinates;
+import org.binu.hypersonic.HotSpot;
 import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
@@ -32,7 +33,7 @@ public class SimpleTree {
         count = 0;
     }
 
-    public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items) {
+    public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items, List<HotSpot> reachableHotSpots) {
         rootNode = new TreeNode(board, myBomber);
 
         final long startTime = new Date().getTime();
