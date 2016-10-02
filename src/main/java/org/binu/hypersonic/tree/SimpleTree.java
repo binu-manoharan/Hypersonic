@@ -6,8 +6,11 @@ import org.binu.hypersonic.board.Board;
 import org.binu.hypersonic.entity.Bomb;
 import org.binu.hypersonic.entity.Bomber;
 import org.binu.hypersonic.entity.Item;
+import org.binu.hypersonic.move.AbstractBomberMove;
+import org.binu.hypersonic.move.BombXY;
 import org.binu.hypersonic.move.BomberMove;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +24,8 @@ public class SimpleTree {
     public static final int TIME_LIMIT_IN_MS = 40;
     Random random = new Random();
     private int count = 0;
+    private List<Coordinates> reachableHotSpots;
+    private ArrayList<Bomb> bombs;
 
     public void setRootNode(TreeNode rootNode) {
         this.rootNode = rootNode;
@@ -33,18 +38,20 @@ public class SimpleTree {
         count = 0;
     }
 
-    public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items, List<HotSpot> reachableHotSpots) {
+    public TreeNode makeTree(Board board, Bomber myBomber, List<Bomb> bombs, List<Item> items, List<Coordinates> reachableHotSpots) {
+        this.reachableHotSpots = reachableHotSpots;
         rootNode = new TreeNode(board, myBomber);
 
         final long startTime = new Date().getTime();
 
         while (new Date().getTime() - startTime < TIME_LIMIT_IN_MS) {
+            this.bombs = new ArrayList<>();
             playOut(board, rootNode, 0);
         }
 
         final TreeNode selectedNode = getHighestWinRatioNode();
-//        lowestScoringNode.getBoard().printBoard();
-//        lowestScoringNode.getBoard().printBoardHeat();
+        selectedNode.getBoard().printBoard();
+        selectedNode.getBoard().printBoardHeat();
 
         return selectedNode;
     }
@@ -66,7 +73,7 @@ public class SimpleTree {
     }
 
     public TreeNode getHighestWinRatioNode() {
-        System.err.println("Number of full depth simulations: " + count);
+//        System.err.println("Number of full depth simulations: " + count);
         double highestWinRatio = -1;
         int highestNodeIndex = 0;
         final List<TreeNode> children = rootNode.getChildren();
@@ -77,7 +84,7 @@ public class SimpleTree {
                 highestWinRatio = nodeWinRatio;
                 highestNodeIndex = children.indexOf(treeNode);
             }
-//            printNodeInfo(treeNode, nodeWinRatio);
+            printNodeInfo(treeNode, nodeWinRatio);
         }
         return children.get(highestNodeIndex);
     }
@@ -116,10 +123,7 @@ public class SimpleTree {
         treeNode.addVisit();
 
         final List<BomberMove> availableMoves = treeNode.getAvailableMoves();
-        final int numberOfAvailableMoves = availableMoves.size();
-        final int randomIndex = random.nextInt(numberOfAvailableMoves);
-
-        final BomberMove bomberMove = availableMoves.get(randomIndex);
+        final BomberMove bomberMove = selectMove(availableMoves, treeNode.getBomber().getCoordinates());
         Board board1;
         Bomber bomber1;
         TreeNode childNode = new TreeNode(null, null);
@@ -131,7 +135,8 @@ public class SimpleTree {
             childNode = new TreeNode(board1, bomber1);
             childNode.setBomberMove(bomberMove);
             treeNode.addChild(childNode);
-            childNode.applyMove(bomberMove);
+            final Bomb bomb = childNode.applyMove(bomberMove);
+            bombs.add(bomb);
             board1.tickBombs();
             board1.calculateHeat();
 //            System.err.print("  | N");
@@ -144,18 +149,38 @@ public class SimpleTree {
 //            System.err.print("  | E");
         }
 
-        if (board1.getCell(bomber1.getCoordinates()).getHeat() == 0) {
-            propagateLoss(treeNode);
+        final int cellHeat = board1.getCell(bomber1.getCoordinates()).getHeat();
+        if (cellHeat == 1) {
+            propagateLoss(childNode);
             return;
         }
 
-        final boolean bombWentOff = removeExpiredBombsAndResetBombCount(board1, treeNode.getBomber());
+        final boolean bombWentOff = removeExpiredBombsAndResetBombCount(board1, childNode.getBomber());
         if (bombWentOff) {
-            propagateWin(treeNode);
+            propagateWin(childNode);
             return;
         }
 
         playOut(board1, childNode, ++depth);
+    }
+
+    private BomberMove selectMove(List<BomberMove> availableMoves, Coordinates bomberCoordinates) {
+        final ArrayList<BomberMove> bombingMoves = new ArrayList<>();
+
+        for (BomberMove availableMove : availableMoves) {
+            if (availableMove.getMoveCode() == AbstractBomberMove.BOMB_CODE) {
+                bombingMoves.add(availableMove);
+            }
+        }
+
+        final int randomiser = random.nextInt(100);
+        if (!reachableHotSpots.contains(bomberCoordinates) && randomiser < 80) {
+            availableMoves.removeAll(bombingMoves);
+        }
+
+        final int numberOfAvailableMoves = availableMoves.size();
+        final int randomIndex = random.nextInt(numberOfAvailableMoves);
+        return availableMoves.get(randomIndex);
     }
 
     private void propagateWin(TreeNode treeNode) {
@@ -172,6 +197,8 @@ public class SimpleTree {
             if (expiredBomb.getOwnerId() == bomber.getOwnerId()) {
                 bomber.bombWentOffInGrid();
                 return true;
+//                return bombs.contains(expiredBomb);
+
             }
         }
         return false;

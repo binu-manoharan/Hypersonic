@@ -44,7 +44,7 @@ public class MadBomber {
     public BomberMove calculateNextMove() {
         hotSpotProvider = new HotSpotProvider(board);
         final List<HotSpot> allHotSpots = hotSpotProvider.getAllHotSpots(myBomber.getRange());
-        final List<HotSpot> reachableHotSpots = getReachableHotSpots(allHotSpots);
+        final List<Coordinates> reachableHotSpotsCoordinates = getReachableHotSpots(allHotSpots);
         /**
          * Info for tree
          * board - heat level
@@ -53,7 +53,7 @@ public class MadBomber {
          * Item spots inside box - cellItem & cell status combination
          * my bomber - x, y, range and number of bombs
          */
-        final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items, reachableHotSpots);
+        final TreeNode bestChild = simpleTree.makeTree(board, myBomber, bombs, items, reachableHotSpotsCoordinates);
         return bestChild.getBomberMove();
     }
 
@@ -71,12 +71,12 @@ public class MadBomber {
         return new MoveXY(myBomber.getCoordinates());
     }
 
-    private List<HotSpot> getReachableHotSpots(List<HotSpot> allHotSpots) {
-        final List<HotSpot> reachableHotSpots = new ArrayList<>();
+    private List<Coordinates> getReachableHotSpots(List<HotSpot> allHotSpots) {
+        final List<Coordinates> reachableHotSpots = new ArrayList<>();
         for (HotSpot hotSpot : allHotSpots) {
             final int distanceToHotSpot = pathHelper.findShortestDistance(board, myBomber.getCoordinates(), hotSpot.getCoordinates());
             if (distanceToHotSpot > -1) {
-                reachableHotSpots.add(hotSpot);
+                reachableHotSpots.add(hotSpot.getCoordinates());
             }
         }
         return reachableHotSpots;

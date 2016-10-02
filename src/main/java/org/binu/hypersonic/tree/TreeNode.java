@@ -59,9 +59,10 @@ public class TreeNode {
         return moves;
     }
 
-    public void applyMove(BomberMove bomberMove) {
+    public Bomb applyMove(BomberMove bomberMove) {
+        Bomb bomb = null;
         if (bomberMove.getMoveCode() == AbstractBomberMove.BOMB_CODE) {
-            final Bomb bomb = new Bomb(bomber.getOwnerId(), bomber.getCoordinates(), Bomb.BOMB_HEAT, bomber.getRange());
+            bomb = new Bomb(bomber.getOwnerId(), bomber.getCoordinates(), Bomb.BOMB_HEAT, bomber.getRange());
             final boolean placedBomb = board.addBomb(bomb);
             assert placedBomb : "Bomb already exists?!?!?" + bomber.getCoordinates();
             bomber.placedABomb();
@@ -69,7 +70,7 @@ public class TreeNode {
 
         final Coordinates coordinates = bomberMove.getCoordinates();
         this.bomber.setCoordinates(coordinates);
-
+        return bomb;
     }
 
     public void addChild(TreeNode childNode) {
