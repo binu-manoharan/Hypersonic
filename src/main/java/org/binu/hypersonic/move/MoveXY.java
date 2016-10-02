@@ -23,6 +23,6 @@ public class MoveXY extends AbstractBomberMove {
 
     @Override
     public String toString() {
-        return render();
+        return render() + "       ";
     }
 }

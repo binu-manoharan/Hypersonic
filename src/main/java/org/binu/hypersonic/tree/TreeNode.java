@@ -50,7 +50,8 @@ public class TreeNode {
         }
         for (Coordinates validMoveCoordinate : validMoveCoordinates) {
             moves.add(new MoveXY(validMoveCoordinate));
-            if (bomber.canPlaceBombs()) {
+            //TODO add test here
+            if (bomber.canPlaceBombs() && board.getCellStatus(bomberCoordinates) != CellStatus.BOMB) {
                 moves.add(new BombXY(validMoveCoordinate, bomberCoordinates));
             }
         }
@@ -68,6 +69,7 @@ public class TreeNode {
 
         final Coordinates coordinates = bomberMove.getCoordinates();
         this.bomber.setCoordinates(coordinates);
+
     }
 
     public void addChild(TreeNode childNode) {
@@ -129,5 +131,13 @@ public class TreeNode {
 
     public Bomber getBomber() {
         return bomber;
+    }
+
+    public void addWin() {
+        wins++;
+    }
+
+    public int getWins() {
+        return wins;
     }
 }

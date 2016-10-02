@@ -45,10 +45,9 @@ public class SimpleTreeTest {
         final TreeNode rootNode = new TreeNode(board, bomber);
         simpleTree.setRootNode(rootNode);
         long startTime = new Date().getTime();
-        while(new Date().getTime() - startTime < 100) {
+        while(new Date().getTime() - startTime < 5000) {
             simpleTree.playOut(new Board(board), rootNode, 0);
         }
-        simpleTree.playOut(new Board(board), rootNode, 0);
         simpleTree.playOut(new Board(board), rootNode, 0);
         simpleTree.playOut(new Board(board), rootNode, 0);
         simpleTree.playOut(new Board(board), rootNode, 0);

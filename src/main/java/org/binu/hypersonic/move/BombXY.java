@@ -30,7 +30,7 @@ public class BombXY extends AbstractBomberMove {
 
     @Override
     public String toString() {
-        return render() + " BC=" + bombCoordinates;
+        return render() + " BC=" + bombCoordinates.x + " " + bombCoordinates.y;
     }
 
     @Override

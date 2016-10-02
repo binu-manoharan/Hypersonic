@@ -73,8 +73,8 @@ class Player {
 
             final BomberMove move = madBomber.calculateNextMove();
             final long endTime = new Date().getTime();
-            System.err.println("Exec Time: " + (endTime - startTime) + " ms.");
-            System.out.println(move.render());
+            final String execTime = " " + (endTime - startTime) + " ms.";
+            System.out.println(move.render() + execTime);
         }
     }
 }
